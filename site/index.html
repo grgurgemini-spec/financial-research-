@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claude Code Income Opportunities — Dashboard</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💶</text></svg>">
+<style>
+  :root {
+    color-scheme: light;
+    --page: #f9f9f7; --surface-1: #fcfcfb;
+    --text-primary: #0b0b0b; --text-secondary: #52514e; --muted: #898781;
+    --grid: #e1e0d9; --baseline: #c3c2b7; --border: rgba(11,11,11,.10);
+    --cat-freelance: #2a78d6; --cat-product: #008300;
+    --cat-automated: #e87ba4; --cat-geospatial: #eda100;
+    --accent: #2a78d6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --page: #0d0d0d; --surface-1: #1a1a19;
+      --text-primary: #ffffff; --text-secondary: #c3c2b7; --muted: #898781;
+      --grid: #2c2c2a; --baseline: #383835; --border: rgba(255,255,255,.10);
+      --cat-freelance: #3987e5; --cat-product: #008300;
+      --cat-automated: #d55181; --cat-geospatial: #c98500;
+      --accent: #3987e5;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface-1: #1a1a19;
+    --text-primary: #ffffff; --text-secondary: #c3c2b7; --muted: #898781;
+    --grid: #2c2c2a; --baseline: #383835; --border: rgba(255,255,255,.10);
+    --cat-freelance: #3987e5; --cat-product: #008300;
+    --cat-automated: #d55181; --cat-geospatial: #c98500;
+    --accent: #3987e5;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--page); color: var(--text-primary);
+    font: 15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 20px 14px 60px; }
+  header h1 { font-size: 1.45rem; margin: 6px 0 2px; }
+  header p { color: var(--text-secondary); margin: 0 0 4px; }
+  header .small { font-size: .82rem; color: var(--muted); }
+  a { color: var(--accent); }
+
+  .controls {
+    display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+    margin: 18px 0 10px;
+  }
+  .chip {
+    border: 1px solid var(--border); background: var(--surface-1);
+    color: var(--text-secondary); border-radius: 999px; padding: 4px 12px;
+    cursor: pointer; font-size: .85rem; display: inline-flex; align-items: center; gap: 6px;
+  }
+  .chip .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+  .chip.active { color: var(--text-primary); border-color: var(--text-secondary); font-weight: 600; }
+  .controls select, .controls input[type=search] {
+    background: var(--surface-1); color: var(--text-primary);
+    border: 1px solid var(--border); border-radius: 8px; padding: 5px 8px; font-size: .85rem;
+  }
+  .controls input[type=search] { min-width: 160px; flex: 1; }
+
+  details.weights {
+    background: var(--surface-1); border: 1px solid var(--border);
+    border-radius: 10px; padding: 8px 12px; margin: 0 0 14px; font-size: .85rem;
+  }
+  details.weights summary { cursor: pointer; color: var(--text-secondary); }
+  .wrow { display: flex; align-items: center; gap: 8px; margin: 6px 0; flex-wrap: wrap; }
+  .wrow label { width: 130px; color: var(--text-secondary); }
+  .wrow output { width: 40px; text-align: right; font-variant-numeric: tabular-nums; }
+  .wrow input[type=range] { flex: 1; min-width: 120px; accent-color: var(--accent); }
+
+  .card {
+    background: var(--surface-1); border: 1px solid var(--border);
+    border-radius: 12px; padding: 14px; margin-bottom: 18px;
+  }
+  .card h2 { font-size: 1.02rem; margin: 0 0 2px; }
+  .card .sub { font-size: .82rem; color: var(--muted); margin: 0 0 8px; }
+  .legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: .82rem; color: var(--text-secondary); margin: 6px 0 2px; }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .legend .dot { width: 10px; height: 10px; border-radius: 50%; }
+
+  #scatterbox { position: relative; }
+  #scatter { width: 100%; height: auto; display: block; }
+  #tooltip {
+    position: absolute; pointer-events: none; display: none; z-index: 5;
+    background: var(--surface-1); color: var(--text-primary);
+    border: 1px solid var(--border); border-radius: 8px;
+    box-shadow: 0 4px 14px rgba(0,0,0,.18);
+    padding: 8px 10px; font-size: .8rem; max-width: 260px;
+  }
+  #tooltip .t-name { font-weight: 600; }
+  #tooltip .t-meta { color: var(--text-secondary); }
+
+  .tablebox { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: .86rem; min-width: 860px; }
+  th, td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--grid); vertical-align: top; }
+  th {
+    cursor: pointer; user-select: none; white-space: nowrap;
+    color: var(--text-secondary); font-weight: 600; border-bottom: 1px solid var(--baseline);
+    position: sticky; top: 0; background: var(--surface-1);
+  }
+  th .arr { font-size: .7rem; color: var(--muted); }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  tr.datarow { cursor: pointer; }
+  tr.datarow:hover td { background: rgba(128,128,128,.07); }
+  .catmark { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 7px; }
+  .score { font-weight: 700; }
+  tr.detail td {
+    background: rgba(128,128,128,.05); font-size: .84rem; color: var(--text-secondary);
+    padding: 12px 14px;
+  }
+  tr.detail .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 24px; }
+  @media (max-width: 700px) { tr.detail .cols { grid-template-columns: 1fr; } }
+  tr.detail h4 { margin: 0 0 4px; color: var(--text-primary); font-size: .84rem; }
+  tr.detail ol { margin: 0 0 8px 18px; padding: 0; }
+  tr.detail p { margin: 0 0 8px; }
+  .risknote { color: var(--muted); font-size: .78rem; }
+  footer { color: var(--muted); font-size: .8rem; margin-top: 8px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Earning income with Claude Code — 25 options, ranked</h1>
+    <p>Best = easy × makes money. Click any column to sort, any row for details, sliders to re-weight the score.</p>
+    <p class="small">Research date 2026-07-18 · income = realistic €/month after ~6 months part-time, net of platform fees · full analysis in <a href="../REPORT.md">REPORT.md</a></p>
+  </header>
+
+  <div class="controls" id="catchips"></div>
+  <div class="controls">
+    <select id="maxskill">
+      <option value="5">Skill: any</option>
+      <option value="1">Skill ≤ 1</option>
+      <option value="2">Skill ≤ 2</option>
+      <option value="3">Skill ≤ 3</option>
+      <option value="4">Skill ≤ 4</option>
+    </select>
+    <select id="minauto">
+      <option value="0">Automation: any</option>
+      <option value="50">Automation ≥ 50%</option>
+      <option value="80">Automation ≥ 80% (set &amp; forget)</option>
+      <option value="90">Automation ≥ 90%</option>
+    </select>
+    <input type="search" id="search" placeholder="Search…" aria-label="Search opportunities">
+  </div>
+
+  <details class="weights">
+    <summary>Score weights (income 0.40 · ease 0.30 · automation 0.15 · low-risk 0.15) — drag to re-rank</summary>
+    <div class="wrow"><label for="w-income">Income</label><input type="range" id="w-income" min="0" max="100" value="40"><output id="o-income">0.40</output></div>
+    <div class="wrow"><label for="w-ease">Ease</label><input type="range" id="w-ease" min="0" max="100" value="30"><output id="o-ease">0.30</output></div>
+    <div class="wrow"><label for="w-auto">Automation</label><input type="range" id="w-auto" min="0" max="100" value="15"><output id="o-auto">0.15</output></div>
+    <div class="wrow"><label for="w-risk">Low risk</label><input type="range" id="w-risk" min="0" max="100" value="15"><output id="o-risk">0.15</output></div>
+  </details>
+
+  <div class="card">
+    <h2>Effort vs. income</h2>
+    <p class="sub">Right = easier to start · higher = more €/month (log scale) · top-right is the sweet spot. Top 5 by score are labeled.</p>
+    <div class="legend" id="legend"></div>
+    <div id="scatterbox">
+      <svg id="scatter" viewBox="0 0 900 460" role="img" aria-label="Scatter plot of ease score versus monthly income for each opportunity"></svg>
+      <div id="tooltip"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Ranking table</h2>
+    <p class="sub" id="count"></p>
+    <div class="tablebox">
+      <table id="tbl">
+        <thead><tr id="headrow"></tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <footer>Data: <a href="../data/opportunities.json">data/opportunities.json</a> · scoring formula in REPORT.md · figures are research estimates, not guarantees.</footer>
+</div>
+
+<script>
+"use strict";
+const CATS = ["freelance", "product", "automated", "geospatial"];
+const CATLABEL = { freelance: "Freelance & services", product: "Products", automated: "Automated pipelines", geospatial: "Geospatial" };
+const catColor = c => getComputedStyle(document.documentElement).getPropertyValue("--cat-" + c).trim();
+
+const clamp = (x, lo = 0, hi = 10) => Math.max(lo, Math.min(hi, x));
+function subscores(o) {
+  const income = clamp(10 * Math.log10(Math.max(o.income_mid, 1)) / Math.log10(20000));
+  const ease = ((5 - o.skill) / 4 * 10
+    + clamp(10 - o.time_to_first_eur_days / 90 * 10)
+    + clamp(10 - o.upfront_cost_eur / 500 * 10)) / 3;
+  return { income, ease, automation: o.automation_pct / 10, lowrisk: (5 - o.risk) / 4 * 10 };
+}
+function totalScore(o, w) {
+  const s = subscores(o);
+  const sum = w.income + w.ease + w.auto + w.risk || 1;
+  return (w.income * s.income + w.ease * s.ease + w.auto * s.automation + w.risk * s.lowrisk) / sum;
+}
+
+const state = {
+  data: [], cat: "all", maxskill: 5, minauto: 0, q: "",
+  sortKey: "total", sortDir: -1, open: null,
+  w: { income: 40, ease: 30, auto: 15, risk: 15 },
+};
+
+const COLS = [
+  { key: "name", label: "Opportunity", num: false },
+  { key: "income_mid", label: "€/mo (mid)", num: true },
+  { key: "time_to_first_eur_days", label: "First €", num: true },
+  { key: "hours_per_week", label: "h/wk", num: true },
+  { key: "skill", label: "Skill", num: true },
+  { key: "upfront_cost_eur", label: "Cost €", num: true },
+  { key: "automation_pct", label: "Auto", num: true },
+  { key: "risk", label: "Risk", num: true },
+  { key: "total", label: "Score", num: true },
+];
+
+function filtered() {
+  const q = state.q.toLowerCase();
+  return state.data
+    .filter(o => (state.cat === "all" || o.category === state.cat)
+      && o.skill <= state.maxskill
+      && o.automation_pct >= state.minauto
+      && (!q || (o.name + " " + o.description).toLowerCase().includes(q)))
+    .map(o => ({ ...o, total: totalScore(o, state.w) }))
+    .sort((a, b) => {
+      const k = state.sortKey;
+      const av = a[k], bv = b[k];
+      const cmp = typeof av === "string" ? av.localeCompare(bv) : av - bv;
+      return cmp * state.sortDir || b.total - a.total;
+    });
+}
+
+function renderChips() {
+  const el = document.getElementById("catchips");
+  el.innerHTML = "";
+  const mk = (val, label, color) => {
+    const b = document.createElement("button");
+    b.className = "chip" + (state.cat === val ? " active" : "");
+    if (color) b.innerHTML = `<span class="dot" style="background:${color}"></span>`;
+    b.appendChild(document.createTextNode(label));
+    b.onclick = () => { state.cat = val; render(); };
+    el.appendChild(b);
+  };
+  mk("all", "All categories", null);
+  CATS.forEach(c => mk(c, CATLABEL[c], catColor(c)));
+}
+
+function renderLegend() {
+  document.getElementById("legend").innerHTML = CATS.map(c =>
+    `<span><span class="dot" style="background:${catColor(c)}"></span>${CATLABEL[c]}</span>`).join("");
+}
+
+function fmtIncome(o) { return `${o.income_low}–${o.income_high} <span style="color:var(--muted)">(${o.income_mid})</span>`; }
+
+function renderTable(rows) {
+  const head = document.getElementById("headrow");
+  head.innerHTML = "";
+  COLS.forEach(c => {
+    const th = document.createElement("th");
+    if (c.num) th.className = "num";
+    th.innerHTML = c.label + (state.sortKey === c.key ? ` <span class="arr">${state.sortDir < 0 ? "▼" : "▲"}</span>` : "");
+    th.onclick = () => {
+      if (state.sortKey === c.key) state.sortDir *= -1;
+      else { state.sortKey = c.key; state.sortDir = c.key === "name" ? 1 : -1; }
+      render();
+    };
+    head.appendChild(th);
+  });
+
+  const tb = document.getElementById("tbody");
+  tb.innerHTML = "";
+  rows.forEach(o => {
+    const tr = document.createElement("tr");
+    tr.className = "datarow";
+    tr.innerHTML =
+      `<td><span class="catmark" style="background:${catColor(o.category)}"></span>${o.name}</td>` +
+      `<td class="num">${fmtIncome(o)}</td>` +
+      `<td class="num">${o.time_to_first_eur_days} d</td>` +
+      `<td class="num">${o.hours_per_week}</td>` +
+      `<td class="num">${o.skill}/5</td>` +
+      `<td class="num">${o.upfront_cost_eur}</td>` +
+      `<td class="num">${o.automation_pct}%</td>` +
+      `<td class="num">${o.risk}/5</td>` +
+      `<td class="num score">${o.total.toFixed(2)}</td>`;
+    tr.onclick = () => { state.open = state.open === o.id ? null : o.id; render(); };
+    tb.appendChild(tr);
+    if (state.open === o.id) {
+      const dr = document.createElement("tr");
+      dr.className = "detail";
+      const steps = o.first_steps.map(s => `<li>${s}</li>`).join("");
+      const links = o.links.map(u => `<a href="${u}" target="_blank" rel="noopener">${new URL(u).hostname.replace("www.", "")}</a>`).join(" · ");
+      dr.innerHTML = `<td colspan="${COLS.length}"><div class="cols">
+        <div><h4>What & why</h4><p>${o.description}</p><p class="risknote">Croatia: ${o.croatia_notes}</p></div>
+        <div><h4>First 3 steps</h4><ol>${steps}</ol><h4>Sources</h4><p>${links}</p></div>
+      </div></td>`;
+      tb.appendChild(dr);
+    }
+  });
+  document.getElementById("count").textContent =
+    `${rows.length} of ${state.data.length} opportunities shown — sorted by ${COLS.find(c => c.key === state.sortKey).label}`;
+}
+
+function renderScatter(rows) {
+  const svg = document.getElementById("scatter");
+  const W = 900, H = 460, L = 62, R = 16, T = 14, B = 44;
+  const x = v => L + (v / 10) * (W - L - R);
+  const yMin = Math.log10(10), yMax = Math.log10(10000);
+  const y = eur => {
+    const lv = Math.log10(Math.max(eur, 10));
+    return T + (1 - (lv - yMin) / (yMax - yMin)) * (H - T - B);
+  };
+  let g = "";
+  [10, 100, 1000, 10000].forEach(v => {
+    g += `<line x1="${L}" y1="${y(v)}" x2="${W - R}" y2="${y(v)}" stroke="var(--grid)" stroke-width="1"/>` +
+      `<text x="${L - 8}" y="${y(v) + 4}" text-anchor="end" font-size="11" fill="var(--muted)">${v >= 1000 ? (v / 1000) + "k" : v}</text>`;
+  });
+  [0, 2, 4, 6, 8, 10].forEach(v => {
+    g += `<text x="${x(v)}" y="${H - B + 18}" text-anchor="middle" font-size="11" fill="var(--muted)">${v}</text>`;
+  });
+  g += `<line x1="${L}" y1="${H - B}" x2="${W - R}" y2="${H - B}" stroke="var(--baseline)" stroke-width="1"/>`;
+  g += `<text x="${(L + W - R) / 2}" y="${H - 6}" text-anchor="middle" font-size="12" fill="var(--text-secondary)">Ease score (0–10) →</text>`;
+  g += `<text x="14" y="${(T + H - B) / 2}" text-anchor="middle" font-size="12" fill="var(--text-secondary)" transform="rotate(-90 14 ${(T + H - B) / 2})">€ / month (mid, log) →</text>`;
+
+  const top5 = [...rows].sort((a, b) => b.total - a.total).slice(0, 5).map(o => o.id);
+  const placedLabels = [];
+  rows.forEach(o => {
+    const s = subscores(o);
+    const cx = x(s.ease), cy = y(o.income_mid);
+    g += `<g class="pt" data-id="${o.id}">` +
+      `<circle cx="${cx}" cy="${cy}" r="14" fill="transparent"/>` +
+      `<circle cx="${cx}" cy="${cy}" r="6.5" fill="${catColor(o.category)}" stroke="var(--surface-1)" stroke-width="2"/>`;
+    if (top5.includes(o.id)) {
+      let short = o.name.split(" (")[0];
+      if (short.length > 30) short = short.slice(0, 28) + "…";
+      const wpx = short.length * 6.4 + 4;
+      const anchor = cx > W - (wpx + 30) ? "end" : "start";
+      const lx = anchor === "end" ? cx - 10 - wpx : cx + 10;
+      // greedy vertical de-overlap against already-placed label boxes
+      let ly = cy - 9;
+      for (const dy of [0, 24, -22, 42, -40, 60]) {
+        const cand = cy - 9 + dy;
+        const clash = placedLabels.some(b =>
+          lx < b.x + b.w && lx + wpx > b.x && Math.abs(cand - b.y) < 15);
+        if (!clash) { ly = cand; break; }
+      }
+      placedLabels.push({ x: lx, y: ly, w: wpx });
+      g += `<text x="${anchor === "end" ? cx - 10 : cx + 10}" y="${ly + 4}" text-anchor="${anchor}" font-size="11" font-weight="600" fill="var(--text-primary)" stroke="var(--surface-1)" stroke-width="3" paint-order="stroke">${short}</text>`;
+    }
+    g += `</g>`;
+  });
+  svg.innerHTML = g;
+
+  const tip = document.getElementById("tooltip");
+  const byId = Object.fromEntries(rows.map(o => [o.id, o]));
+  svg.querySelectorAll("g.pt").forEach(el => {
+    el.addEventListener("pointerenter", () => {
+      const o = byId[el.dataset.id];
+      tip.innerHTML = `<div class="t-name">${o.name}</div>` +
+        `<div class="t-meta">${CATLABEL[o.category]} · score ${o.total.toFixed(2)}</div>` +
+        `<div>€${o.income_low}–${o.income_high}/mo · first € in ${o.time_to_first_eur_days} d</div>` +
+        `<div class="t-meta">skill ${o.skill}/5 · ${o.automation_pct}% automated · risk ${o.risk}/5</div>`;
+      tip.style.display = "block";
+    });
+    el.addEventListener("pointermove", ev => {
+      const box = document.getElementById("scatterbox").getBoundingClientRect();
+      let px = ev.clientX - box.left + 14, py = ev.clientY - box.top + 12;
+      if (px + 270 > box.width) px -= 290;
+      tip.style.left = px + "px"; tip.style.top = py + "px";
+    });
+    el.addEventListener("pointerleave", () => { tip.style.display = "none"; });
+  });
+}
+
+function render() {
+  const rows = filtered();
+  renderChips();
+  renderLegend();
+  renderScatter(rows);
+  renderTable(rows);
+}
+
+["income", "ease", "auto", "risk"].forEach(k => {
+  const inp = document.getElementById("w-" + k);
+  inp.addEventListener("input", () => {
+    state.w[k] = +inp.value;
+    const sum = state.w.income + state.w.ease + state.w.auto + state.w.risk || 1;
+    for (const kk of ["income", "ease", "auto", "risk"])
+      document.getElementById("o-" + kk).textContent = (state.w[kk] / sum).toFixed(2);
+    render();
+  });
+});
+document.getElementById("maxskill").addEventListener("change", e => { state.maxskill = +e.target.value; render(); });
+document.getElementById("minauto").addEventListener("change", e => { state.minauto = +e.target.value; render(); });
+document.getElementById("search").addEventListener("input", e => { state.q = e.target.value; render(); });
+window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", render);
+
+fetch("../data/opportunities.json")
+  .then(r => r.json())
+  .then(d => { state.data = d.opportunities; render(); })
+  .catch(() => {
+    document.getElementById("count").textContent =
+      "Could not load data/opportunities.json — serve the repo root (python -m http.server) and open /site/, don't open the file directly.";
+  });
+</script>
+</body>
+</html>
