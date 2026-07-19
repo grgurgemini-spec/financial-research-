@@ -10,6 +10,7 @@ Deep research analysis (July 2026) of **25 ways to earn side income using Claude
 | [`data/opportunities.json`](data/opportunities.json) | Structured dataset — every opportunity with all metrics, scores, first steps, and source links |
 | [`site/index.html`](site/index.html) | Interactive dashboard: sortable/filterable table, effort-vs-income chart, live score re-weighting |
 | [`compute_scores.py`](compute_scores.py) | Recomputes scores in `data/opportunities.json` and prints the ranked markdown tables (edit the weights here) |
+| [`eo-monitor/`](eo-monitor/) | 🛰️ **EO Monitor** — automated Sentinel-2 NDVI/snow/flood monitoring pipeline + report site (the report's #19 "geospatial micro-SaaS" seed, built) |
 
 ## Run the dashboard locally
 

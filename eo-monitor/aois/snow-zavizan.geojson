@@ -1,0 +1,22 @@
+{
+  "type": "Feature",
+  "properties": {
+    "id": "snow-zavizan",
+    "name": "Zavižan – northern Velebit",
+    "product": "ndsi",
+    "description": "High-elevation zone around Zavižan, northern Velebit. Snow fraction (NDSI > 0.4) tracks accumulation and melt; a sharp fraction drop flags snowmelt onset.",
+    "max_cloud_pct": 50,
+    "index_threshold": 0.4,
+    "drop_alert": 0.20
+  },
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [[
+      [14.935, 44.780],
+      [15.025, 44.780],
+      [15.025, 44.845],
+      [14.935, 44.845],
+      [14.935, 44.780]
+    ]]
+  }
+}

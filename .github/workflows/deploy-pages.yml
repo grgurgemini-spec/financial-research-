@@ -1,1 +1,39 @@
-bmFtZTogRGVwbG95IGRhc2hib2FyZCB0byBHaXRIdWIgUGFnZXMKCm9uOgogIHdvcmtmbG93X2Rpc3BhdGNoOiB7fQogIHB1c2g6CiAgICBicmFuY2hlczogW21haW5dCgpwZXJtaXNzaW9uczoKICBjb250ZW50czogd3JpdGUKCmNvbmN1cnJlbmN5OgogIGdyb3VwOiBkZXBsb3ktcGFnZXMKICBjYW5jZWwtaW4tcHJvZ3Jlc3M6IGZhbHNlCgpqb2JzOgogIGRlcGxveToKICAgIHJ1bnMtb246IHVidW50dS1sYXRlc3QKICAgIHN0ZXBzOgogICAgICAtIHVzZXM6IGFjdGlvbnMvY2hlY2tvdXRANAogICAgICAgIHdpdGg6CiAgICAgICAgICByZWY6IG1haW4KCiAgICAgICMgUHVibGlzaCB0byB0aGUgZ2gtcGFnZXMgYnJhbmNoLiBOb3RlOiB0aGlzIGRvZXMgTk9UIGF1dG8tZW5hYmxlIEdpdEh1YgogICAgICAjIFBhZ2VzIC0gU2V0dGluZ3MgLT4gUGFnZXMgLT4gU291cmNlIG11c3QgYmUgc2V0IHRvICJEZXBsb3kgZnJvbSBhCiAgICAgICMgYnJhbmNoIiAvIGdoLXBhZ2VzIC8gKHJvb3QpIG9uY2UsIG1hbnVhbGx5LCBiZWZvcmUgdGhlIHNpdGUgZ29lcyBsaXZlLgogICAgICAtIG5hbWU6IERlcGxveSB0byBnaC1wYWdlcwogICAgICAgIHJ1bjogfAogICAgICAgICAgcm0gLXJmIC90bXAvcHViICYmIG1rZGlyIC90bXAvcHViCiAgICAgICAgICBjcCAtciBzaXRlIGRhdGEgUkVQT1JULm1kIGluZGV4Lmh0bWwgL3RtcC9wdWIvCiAgICAgICAgICB0b3VjaCAvdG1wL3B1Yi8ubm9qZWt5bGwKICAgICAgICAgIGNkIC90bXAvcHViCiAgICAgICAgICBnaXQgaW5pdCAtcSAtYiBnaC1wYWdlcwogICAgICAgICAgZ2l0IGNvbmZpZyB1c2VyLm5hbWUgImdpdGh1Yi1hY3Rpb25zW2JvdF0iCiAgICAgICAgICBnaXQgY29uZmlnIHVzZXIuZW1haWwgImdpdGh1Yi1hY3Rpb25zW2JvdF1AdXNlcnMubm9yZXBseS5naXRodWIuY29tIgogICAgICAgICAgZ2l0IGFkZCAtQQogICAgICAgICAgZ2l0IGNvbW1pdCAtcSAtbSAiRGVwbG95IHNpdGUgJChkYXRlIC11ICslRlQlVFopIgogICAgICAgICAgZ2l0IHB1c2ggLS1mb3JjZSBcCiAgICAgICAgICAgICJodHRwczovL3gtYWNjZXNzLXRva2VuOiR7eyBnaXRodWIudG9rZW4gfX1AZ2l0aHViLmNvbS8ke3sgZ2l0aHViLnJlcG9zaXRvcnkgfX0uZ2l0IiBcCiAgICAgICAgICAgIGdoLXBhZ2VzCg==
+name: Deploy site to GitHub Pages
+
+on:
+  workflow_dispatch: {}
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: deploy-pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      # Publish the research dashboard + the EO monitor to the gh-pages
+      # branch (Pages serves it: Settings -> Pages -> gh-pages / root).
+      - name: Deploy to gh-pages
+        run: |
+          rm -rf /tmp/pub && mkdir -p /tmp/pub/eo-monitor
+          cp -r site data REPORT.md index.html /tmp/pub/
+          cp -r eo-monitor/site eo-monitor/data eo-monitor/index.html /tmp/pub/eo-monitor/
+          touch /tmp/pub/.nojekyll
+          cd /tmp/pub
+          git init -q -b gh-pages
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "Deploy site $(date -u +%FT%TZ)"
+          git push --force \
+            "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" \
+            gh-pages

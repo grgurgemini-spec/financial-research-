@@ -1,0 +1,102 @@
+[
+ {
+  "date": "2026-05-03",
+  "item_id": "S2A_33TXL_20260503_1_L2A",
+  "cloud_cover_scene": 1.01,
+  "valid_frac": 1.0,
+  "mean_index": -0.6574,
+  "frac_above": 0.0164,
+  "flags": [],
+  "map": "maps/2026-05-03.png"
+ },
+ {
+  "date": "2026-05-26",
+  "item_id": "S2B_33TXL_20260526_0_L2A",
+  "cloud_cover_scene": 0.0,
+  "valid_frac": 1.0,
+  "mean_index": -0.7031,
+  "frac_above": 0.0168,
+  "flags": [],
+  "map": "maps/2026-05-26.png"
+ },
+ {
+  "date": "2026-06-02",
+  "item_id": "S2A_33TXL_20260602_1_L2A",
+  "cloud_cover_scene": 24.59,
+  "valid_frac": 0.6085,
+  "mean_index": -0.7061,
+  "frac_above": 0.0123,
+  "flags": [],
+  "map": "maps/2026-06-02.png"
+ },
+ {
+  "date": "2026-06-20",
+  "item_id": "S2C_33TXL_20260620_0_L2A",
+  "cloud_cover_scene": 0.22,
+  "valid_frac": 1.0,
+  "mean_index": -0.7298,
+  "frac_above": 0.0178,
+  "flags": [],
+  "map": "maps/2026-06-20.png"
+ },
+ {
+  "date": "2026-06-22",
+  "item_id": "S2A_33TXL_20260622_1_L2A",
+  "cloud_cover_scene": 20.45,
+  "valid_frac": 0.3869,
+  "mean_index": -0.7364,
+  "frac_above": 0.0004,
+  "flags": [],
+  "map": "maps/2026-06-22.png"
+ },
+ {
+  "date": "2026-06-25",
+  "item_id": "S2B_33TXL_20260625_0_L2A",
+  "cloud_cover_scene": 0.04,
+  "valid_frac": 1.0,
+  "mean_index": -0.7145,
+  "frac_above": 0.0162,
+  "flags": [],
+  "map": "maps/2026-06-25.png"
+ },
+ {
+  "date": "2026-06-30",
+  "item_id": "S2C_33TXL_20260630_0_L2A",
+  "cloud_cover_scene": 0.01,
+  "valid_frac": 1.0,
+  "mean_index": -0.7156,
+  "frac_above": 0.011,
+  "flags": [],
+  "map": "maps/2026-06-30.png"
+ },
+ {
+  "date": "2026-07-10",
+  "item_id": "S2C_33TXL_20260710_0_L2A",
+  "cloud_cover_scene": 27.84,
+  "valid_frac": 0.7356,
+  "mean_index": -0.6195,
+  "frac_above": 0.0036,
+  "flags": [],
+  "map": "maps/2026-07-10.png"
+ },
+ {
+  "date": "2026-07-12",
+  "item_id": "S2A_33TXL_20260712_1_L2A",
+  "cloud_cover_scene": 5.27,
+  "valid_frac": 0.8822,
+  "mean_index": -0.7201,
+  "frac_above": 0.0043,
+  "flags": [],
+  "map": "maps/2026-07-12.png"
+ },
+ {
+  "date": "2026-07-15",
+  "item_id": "S2B_33TXL_20260715_0_L2A",
+  "cloud_cover_scene": 4.49,
+  "valid_frac": 1.0,
+  "mean_index": -0.7062,
+  "frac_above": 0.013,
+  "flags": [],
+  "map": "maps/2026-07-15.png"
+ }
+]
