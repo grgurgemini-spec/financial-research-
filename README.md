@@ -12,6 +12,7 @@ Deep research analysis (July 2026) of **25 ways to earn side income using Claude
 | [`compute_scores.py`](compute_scores.py) | Recomputes scores in `data/opportunities.json` and prints the ranked markdown tables (edit the weights here) |
 | [`eo-monitor/`](eo-monitor/) | 🛰️ **EO Monitor** — automated Sentinel-2 NDVI/snow/flood monitoring pipeline + report site (the report's #19 "geospatial micro-SaaS" seed, built) |
 | [`LIFEPLAN.md`](LIFEPLAN.md) | 💶 **Life & Work Plan** — Monte Carlo path to financial freedom (10,000 paths × 25 years), phase playbook, decision gates; model in [`lifeplan/`](lifeplan/), interactive page at [`site/lifeplan.html`](site/lifeplan.html) |
+| [`ACTIONS.md`](ACTIONS.md) | 🎯 **Study Findings & Recommended Actions** — 8 key findings + 12 concrete actions to reach €4,000/mo passive income; executive summary, first-90-days calendar, decision gates, risk register; interactive dashboard at [`site/actions.html`](site/actions.html) |
 
 ## Run the dashboard locally
 
