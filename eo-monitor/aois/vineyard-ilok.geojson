@@ -1,0 +1,22 @@
+{
+  "type": "Feature",
+  "properties": {
+    "id": "vineyard-ilok",
+    "name": "Ilok vineyards (Srijem)",
+    "product": "ndvi",
+    "description": "Vineyard slopes above the Danube near Ilok, eastern Croatia. Mean NDVI tracks canopy vigor through the season; a sudden drop flags stress, hail damage or harvest.",
+    "max_cloud_pct": 40,
+    "index_threshold": 0.3,
+    "drop_alert": 0.15
+  },
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [[
+      [19.330, 45.210],
+      [19.375, 45.210],
+      [19.375, 45.232],
+      [19.330, 45.232],
+      [19.330, 45.210]
+    ]]
+  }
+}

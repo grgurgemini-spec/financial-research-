@@ -1,0 +1,22 @@
+{
+  "type": "Feature",
+  "properties": {
+    "id": "flood-lonjsko",
+    "name": "Lonjsko polje – Sava floodplain",
+    "product": "flood",
+    "description": "Sava river floodplain in Lonjsko polje nature park. Water fraction (NDWI > 0.1) over the AOI; exceeding the alert fraction flags an active flood event.",
+    "max_cloud_pct": 50,
+    "index_threshold": 0.1,
+    "water_frac_alert": 0.15
+  },
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [[
+      [16.700, 45.345],
+      [16.800, 45.345],
+      [16.800, 45.420],
+      [16.700, 45.420],
+      [16.700, 45.345]
+    ]]
+  }
+}
