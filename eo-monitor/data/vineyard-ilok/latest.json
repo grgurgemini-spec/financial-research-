@@ -5,7 +5,7 @@
  "index_label": "NDVI",
  "description": "Vineyard slopes above the Danube near Ilok, eastern Croatia. Mean NDVI tracks canopy vigor through the season; a sudden drop flags stress, hail damage or harvest.",
  "index_threshold": 0.3,
- "last_run": "2026-07-20T13:20:42+00:00",
+ "last_run": "2026-07-21T12:03:59+00:00",
  "n_observations": 15,
  "latest": {
   "date": "2026-07-19",
