@@ -5,24 +5,24 @@
  "index_label": "NDSI",
  "description": "High-elevation zone around Zavi\u017ean, northern Velebit. Snow fraction (NDSI > 0.4) tracks accumulation and melt; a sharp fraction drop flags snowmelt onset.",
  "index_threshold": 0.4,
- "last_run": "2026-07-22T12:11:44+00:00",
- "n_observations": 15,
+ "last_run": "2026-07-23T12:09:33+00:00",
+ "n_observations": 16,
  "latest": {
-  "date": "2026-07-18",
-  "item_id": "S2B_33TVK_20260718_0_L2A",
-  "cloud_cover_scene": 6.46,
-  "valid_frac": 0.5618,
-  "mean_index": -0.4698,
+  "date": "2026-07-22",
+  "item_id": "S2A_33TVK_20260722_0_L2A",
+  "cloud_cover_scene": 2.46,
+  "valid_frac": 0.8915,
+  "mean_index": -0.5165,
   "frac_above": 0.0,
   "flags": [],
-  "map": "maps/2026-07-18.png"
+  "map": "maps/2026-07-22.png"
  },
  "maps": [
-  "maps/2026-07-05.png",
   "maps/2026-07-10.png",
   "maps/2026-07-12.png",
   "maps/2026-07-13.png",
   "maps/2026-07-15.png",
-  "maps/2026-07-18.png"
+  "maps/2026-07-18.png",
+  "maps/2026-07-22.png"
  ]
 }
