@@ -168,5 +168,15 @@
   "frac_above": 0.7265,
   "flags": [],
   "map": "maps/2026-07-29.png"
+ },
+ {
+  "date": "2026-08-01",
+  "item_id": "S2B_34TCR_20260801_0_L2A",
+  "cloud_cover_scene": 0.0,
+  "valid_frac": 1.0,
+  "mean_index": 0.4741,
+  "frac_above": 0.7137,
+  "flags": [],
+  "map": "maps/2026-08-01.png"
  }
 ]
