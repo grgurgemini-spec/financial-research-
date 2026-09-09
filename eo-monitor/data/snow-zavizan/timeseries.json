@@ -368,5 +368,15 @@
   "frac_above": 0.0,
   "flags": [],
   "map": "maps/2026-09-06.png"
+ },
+ {
+  "date": "2026-09-08",
+  "item_id": "S2C_33TVK_20260908_0_L2A",
+  "cloud_cover_scene": 0.01,
+  "valid_frac": 1.0,
+  "mean_index": -0.5554,
+  "frac_above": 0.0,
+  "flags": [],
+  "map": "maps/2026-09-08.png"
  }
 ]
