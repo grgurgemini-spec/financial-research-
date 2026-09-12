@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Recommended Actions — Path to €4,000/mo Passive Income</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
+<style>
+  :root {
+    color-scheme: light;
+    --page: #f9f9f7; --surface-1: #fcfcfb;
+    --text-primary: #0b0b0b; --text-secondary: #52514e; --muted: #898781;
+    --grid: #e1e0d9; --baseline: #c3c2b7; --border: rgba(11,11,11,.10);
+    --accent: #2a78d6; --good: #0ca30c;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --page: #0d0d0d; --surface-1: #1a1a19;
+      --text-primary: #ffffff; --text-secondary: #c3c2b7; --muted: #898781;
+      --grid: #2c2c2a; --baseline: #383835; --border: rgba(255,255,255,.10);
+      --accent: #3987e5;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface-1: #1a1a19;
+    --text-primary: #ffffff; --text-secondary: #c3c2b7; --muted: #898781;
+    --grid: #2c2c2a; --baseline: #383835; --border: rgba(255,255,255,.10);
+    --accent: #3987e5;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--page); color: var(--text-primary);
+         font: 15px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 20px 14px 60px; }
+  header h1 { font-size: 1.45rem; margin: 6px 0 4px; }
+  header p { color: var(--text-secondary); margin: 0 0 4px; }
+  .small { font-size: .82rem; color: var(--muted); }
+  a { color: var(--accent); }
+  .card { background: var(--surface-1); border: 1px solid var(--border);
+          border-radius: 12px; padding: 16px; margin-bottom: 16px; }
+  .card h2 { font-size: 1.05rem; margin: 0 0 8px; }
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 16px; }
+  .tile { background: var(--surface-1); border: 1px solid var(--border);
+          border-radius: 12px; padding: 14px; }
+  .tile .v { font-size: 1.7rem; font-weight: 700; }
+  .tile .l { font-size: .8rem; color: var(--muted); }
+  .tile .s { font-size: .8rem; color: var(--text-secondary); margin-top: 4px; }
+  .chart { width: 100%; height: auto; border-radius: 8px; background: #fcfcfb; }
+  .tablebox { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: .86rem; min-width: 560px; }
+  th, td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--grid); }
+  th { color: var(--text-secondary); border-bottom-color: var(--baseline); font-weight: 600; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  footer { color: var(--muted); font-size: .8rem; margin-top: 10px; }
+  .note { font-size: .84rem; color: var(--text-secondary); }
+  .finding { background: var(--surface-1); border: 1px solid var(--border); border-radius: 8px; padding: 12px; margin-bottom: 12px; }
+  .finding h4 { margin: 0 0 6px; font-size: 0.95rem; color: var(--accent); }
+  .finding p { margin: 0; font-size: .9rem; line-height: 1.5; }
+  .section-title { font-size: 1.15rem; font-weight: 600; margin: 20px 0 12px; color: var(--text-primary); }
+  .verdict { font-size: 1.05rem; font-weight: 500; color: var(--good); margin: 8px 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="small"><a href="index.html">← Income opportunities dashboard</a> · <a href="lifeplan.html">Life Plan</a> · <a href="../eo-monitor/site/index.html">EO Monitor</a></p>
+    <h1>🎯 Recommended Actions — Path to €4,000/mo Passive Income</h1>
+    <p>Study findings from 10,000-path Monte Carlo simulation. Every statistic sourced from the life-plan model. This shows consequences of assumptions, not a forecast.</p>
+  </header>
+
+  <div class="card">
+    <h2>Strategic Verdict</h2>
+    <p class="verdict">Salary track dominance >> savings discipline >> product success.</p>
+    <p><strong>The choice to pursue remote-EU-level work vs. staying local is worth ±16 years of financial freedom — more than every other lever combined.</strong></p>
+    <p><strong>Fat FI (€4,000/mo, €1.2M):</strong> 86.5% lifetime probability, median crossing year <strong>2045</strong> (range 2040–beyond 2051).</p>
+    <p><strong>Lean FI (€1,500/mo, €450k):</strong> 99.6% lifetime, median 2037 — work becomes optional age ~35.</p>
+  </div>
+
+  <div class="card">
+    <h2>The Sensitivity Centerpiece: What Actually Moves the Date</h2>
+    <img class="chart" src="../data/lifeplan/sensitivity.png" alt="Sensitivity tornado chart showing which levers move fat-FI median year">
+  </div>
+
+  <div class="tiles" id="findings-tile"></div>
+
+  <div class="card">
+    <div class="section-title">8 Key Findings</div>
+    <div id="findings"></div>
+  </div>
+
+  <div class="card">
+    <h2>12 Recommended Actions</h2>
+    <p class="note">Prioritized by years-of-impact. Each has a deadline and measurable KPI.</p>
+    <div class="tablebox"><table>
+      <thead><tr><th>#</th><th>Action</th><th>Finding(s)</th><th class="num">Deadline</th></tr></thead>
+      <tbody id="actions"></tbody>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h2>5 Decision Gates</h2>
+    <p class="note">Set phone reminders for these dates. Each is a go/no-go checkpoint.</p>
+    <div class="tablebox"><table>
+      <thead><tr><th>When</th><th>Gate</th><th>If Passing</th><th>If Failing</th></tr></thead>
+      <tbody id="gates"></tbody>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h2>First 90 Days: Week-by-Week</h2>
+    <p class="note">2026-08 to 2026-10. These 12 weeks define your career trajectory.</p>
+    <ul style="font-size: .9rem; line-height: 1.6;">
+      <li><strong>Week 1:</strong> Register platforms (Outlier, DataAnnotation, Mindrift), create Upwork account</li>
+      <li><strong>Weeks 2–3:</strong> Complete Upwork profile with 3 GEE demos; invite 3 reviewers</li>
+      <li><strong>Weeks 4–8:</strong> Bid on 10–15 small jobs (<€200); aim for 5-star reviews</li>
+      <li><strong>Weeks 9–12:</strong> Complete 5 Upwork reviews; ship 1 eo-monitor improvement</li>
+      <li><strong>By 2026-10-31:</strong> 5+ Upwork reviews, €200+/mo platform income, eo-monitor live feature</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>Why This Plan Works</h2>
+    <ul style="font-size: .9rem; line-height: 1.6;">
+      <li><strong>Salary track first:</strong> It's the 16-year lever. Everything else is secondary.</li>
+      <li><strong>First 90 days are critical:</strong> Build the portfolio (GitHub, Upwork reviews, EO product) that makes a remote job possible.</li>
+      <li><strong>Savings rate is the engine:</strong> Not income streams or investment genius. 60–70% of every euro goes to ETF.</li>
+      <li><strong>The product is strategic, not desperate:</strong> Ship an improvement by end-2026, measure coldly. If it's not €300 MRR by mid-2031, kill it and redirect.</li>
+      <li><strong>Lean FI (2037) is near-certain:</strong> You can downshift to part-time consulting there. Fat FI (2045) is a coin-flip, but upsidable with salary + product.</li>
+    </ul>
+  </div>
+
+  <footer>
+    Full technical documentation: <a href="../ACTIONS.md">ACTIONS.md</a> (study findings & recommended actions) · <a href="lifeplan.html">Life Plan</a> (narrative + scenarios) · <a href="../lifeplan/model.py">model.py</a> (edit ASSUMPTIONS dict) · <a href="../data/lifeplan/results.json">results.json</a> (all simulation outputs)
+  </footer>
+</div>
+
+<script>
+"use strict";
+fetch("../data/lifeplan/results.json").then(r => r.json()).then(R => {
+  const B = R.scenarios["baseline"].fi;
+  const findings = [
+    {
+      num: "F1",
+      title: "Salary Track Is Worth ±16 Years",
+      text: "Local path: +16.0y to fat FI, 41.8% lifetime prob. Aggressive remote: −3.5y, 98.3% prob. This single decision outweighs all others combined."
+    },
+    {
+      num: "F2",
+      title: "Savings Rate 60–70% Is the Engine",
+      text: "Net worth: €99k (2030) → €320k (2035) → €665k (2040) → €1.15M (2045). Each €300/mo lifestyle creep costs ~+1 year."
+    },
+    {
+      num: "F3",
+      title: "Lean FI (€450k) Is Near-Certain; 8 Years Before Fat",
+      text: "99.6% lifetime probability, median 2037. You can downshift to part-time consulting there. Fat FI (€1.2M) is 86.5% lifetime, median 2045."
+    },
+    {
+      num: "F4",
+      title: "Product Moves Median ~1 Year But Drives Upside",
+      text: "No-product scenario: fat FI 2046 (81.7% prob). Baseline: 2045 (86.5%). Aggressive (product succeeds 85%): 2042 (98.3%). It's the resume artifact for landing the salary track job (F1)."
+    },
+    {
+      num: "F5",
+      title: "Market Returns: ±2 Years You Don't Control",
+      text: "3% real instead of 5% costs +1.8y. Strategy: boring global ETF, rebalance annually, ignore crashes. Dollar-cost averaging is your friend."
+    },
+    {
+      num: "F6",
+      title: "Expenses: Second-Order but Permanent Creep Compounds",
+      text: "Plan works at €700→€1,100/mo. Each additional €300/mo of permanent spending costs ~+1y. Pre-budget all increases; track monthly."
+    },
+    {
+      num: "F7",
+      title: "Side-Hustle Hours Matter as Bridge & Skill Ramp",
+      text: "Cutting 25 h/wk to 15 h/wk costs +1.0y. The value is not just the €800/mo — it's having done it (reviews, client experience, rate-setting) for Phase 2 jobs."
+    },
+    {
+      num: "F8",
+      title: "First 90 Days Are the Highest-Leverage Window",
+      text: "Build portfolio assets (Upwork reviews, 3 GEE demos, eo-monitor improvement) that carry you through graduation and into the job market. These are cumulative and never wasted."
+    }
+  ];
+
+  const actions = [
+    ["A1", "Land remote-EU geospatial/data-engineer offer (€1,800–2,800/mo net)", "F1", "2027-09"],
+    ["A2", "Launch Upwork profile: geospatial automation niche. Portfolio: pokusaj + eo-monitor", "F1, F8", "2026-10"],
+    ["A3", "Register on AI-training platforms (Outlier, DataAnnotation, Mindrift)", "F8", "2026-09"],
+    ["A4", "Set up automated monthly ETF standing order (Phase 2 start)", "F2, F5", "2027-09"],
+    ["A5", "Ship one eo-monitor improvement (webhooks, new type, first pilot user)", "F4, F8", "2026-11"],
+    ["A6", "If product <€300 MRR by 2031-06, stop and redirect hours", "F4", "2031-06"],
+    ["A7", "Audit expenses monthly; pre-budget lifestyle steps", "F6", "Monthly"],
+    ["A8", "Invest in boring, diversified global ETF. Rebalance annually. Ignore crashes", "F2, F5", "2027-09"],
+    ["A9", "Keep 10 h/wk freelance/consulting through Phase 2. Client work compounds rate", "F2, F8", "Ongoing"],
+    ["A10", "At lean FI (2037, €450k), plan sabbatical or downshift to part-time", "F3", "2037"],
+    ["A11", "Do not lock into local salary track. +16y cost is real. If local only near-term, set 12-mo expiry", "F1", "2027-09"],
+    ["A12", "Every December, re-run lifeplan/model.py with actual data. Update ASSUMPTIONS", "All", "Annual"]
+  ];
+
+  const gates = [
+    ["2027-01", "Freelance income ≥€800/mo?", "Continue; raise rates", "Rebalance hours; get 5 Upwork reviews before graduation"],
+    ["2027-09", "Remote-level offer in hand?", "Accept and start Phase 2", "Take local bridge (max 12 mo). Keep applying out. Do NOT unpack."],
+    ["2029-06", "Savings rate ≥55%?", "On track for 2045 fat FI", "Audit expenses. Fix income/spending problem by 2029-12."],
+    ["2031-06", "Product ≥€300 MRR after 18 mo?", "Keep growing; track quarterly", "KILL per A6. Redirect hours to job growth. Product = portfolio asset."],
+    ["Every Dec", "Re-run model with actual 12-mo numbers?", "Update ASSUMPTIONS, regenerate charts, print medians", "Non-negotiable for living model"]
+  ];
+
+  // Findings tiles (top 3)
+  const topFindings = [
+    { num: "F1", stat: "±16 years", desc: "Salary track impact" },
+    { num: "F2", stat: "60–70%", desc: "Savings rate needed" },
+    { num: "F3", stat: "99.6%", desc: "Lean FI probability" }
+  ];
+  document.getElementById("findings-tile").innerHTML = topFindings.map(f =>
+    `<div class="tile"><div class="v">${f.stat}</div><div class="l">${f.num}: ${f.desc}</div></div>`
+  ).join("");
+
+  // Findings cards
+  document.getElementById("findings").innerHTML = findings.map(f =>
+    `<div class="finding"><h4>${f.num}. ${f.title}</h4><p>${f.text}</p></div>`
+  ).join("");
+
+  // Actions table
+  document.getElementById("actions").innerHTML = actions.map(a =>
+    `<tr><td>${a[0]}</td><td>${a[1]}</td><td>${a[2]}</td><td class="num">${a[3]}</td></tr>`
+  ).join("");
+
+  // Gates table
+  document.getElementById("gates").innerHTML = gates.map(g =>
+    `<tr><td>${g[0]}</td><td>${g[1]}</td><td>${g[2]}</td><td>${g[3]}</td></tr>`
+  ).join("");
+}).catch(err => {
+  console.error("Failed to load results.json:", err);
+  document.querySelector("header p").textContent += " (Note: serve the repo root via 'python -m http.server' to load data)";
+});
+</script>
+</body>
+</html>
