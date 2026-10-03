@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EO Monitor — Sentinel-2 AOI reports</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛰️</text></svg>">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>🛰️ EO Monitor</h1>
+    <p>Automated Sentinel-2 monitoring: vegetation, snow cover and flood extent per area of interest.</p>
+    <p class="small" id="generated">Loading…</p>
+  </header>
+  <div class="cards" id="cards"></div>
+  <footer>Data: ESA Copernicus Sentinel-2 via <a href="https://earth-search.aws.element84.com/v1">Earth Search</a> · refreshed daily by GitHub Actions · add an AOI by dropping a GeoJSON into <code>aois/</code>.</footer>
+</div>
+<script>
+"use strict";
+const FLAG_LABEL = { flood_detected: "⚠ Flood detected", ndvi_drop: "⚠ Vegetation drop", snowmelt_onset: "⚠ Snowmelt onset" };
+fetch("../data/index.json").then(r => r.json()).then(d => {
+  document.getElementById("generated").textContent =
+    "Last pipeline run: " + d.generated.replace("T", " ").replace("+00:00", " UTC");
+  const cards = document.getElementById("cards");
+  d.aois.forEach(a => {
+    const latest = a.latest || {};
+    const flags = (latest.flags || []).map(f => `<span class="flag">${FLAG_LABEL[f] || f}</span>`).join("")
+      || `<span class="flag ok">✓ No active alerts</span>`;
+    const lastMap = a.maps && a.maps.length ? `../data/${a.id}/${a.maps[a.maps.length - 1]}` : null;
+    const el = document.createElement("div");
+    el.className = "card";
+    el.innerHTML =
+      `<span class="tag">${a.index_label}</span>` +
+      `<h2><a href="aoi.html?id=${a.id}">${a.name}</a></h2>` +
+      (lastMap ? `<a href="aoi.html?id=${a.id}"><img class="mapimg" src="${lastMap}" alt="Latest ${a.index_label} map of ${a.name}"></a>` : "") +
+      `<div class="stat-row">` +
+      `<span class="stat"><span class="v">${latest.mean_index ?? "–"}</span><br><span class="l">mean ${a.index_label} (${latest.date ?? "no data"})</span></span>` +
+      `<span class="stat"><span class="v">${latest.frac_above != null ? Math.round(latest.frac_above * 100) + "%" : "–"}</span><br><span class="l">area over ${a.index_threshold}</span></span>` +
+      `<span class="stat"><span class="v">${a.n_observations}</span><br><span class="l">observations</span></span>` +
+      `</div>` + flags +
+      `<p class="desc">${a.description}</p>`;
+    cards.appendChild(el);
+  });
+}).catch(() => {
+  document.getElementById("generated").textContent =
+    "Could not load data/index.json — serve the repo root (python -m http.server) and open /site/.";
+});
+</script>
+</body>
+</html>
