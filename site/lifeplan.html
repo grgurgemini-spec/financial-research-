@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Life Plan — Statistical Path to Financial Freedom</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💶</text></svg>">
+<style>
+  :root {
+    color-scheme: light;
+    --page: #f9f9f7; --surface-1: #fcfcfb;
+    --text-primary: #0b0b0b; --text-secondary: #52514e; --muted: #898781;
+    --grid: #e1e0d9; --baseline: #c3c2b7; --border: rgba(11,11,11,.10);
+    --accent: #2a78d6; --good: #0ca30c;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --page: #0d0d0d; --surface-1: #1a1a19;
+      --text-primary: #ffffff; --text-secondary: #c3c2b7; --muted: #898781;
+      --grid: #2c2c2a; --baseline: #383835; --border: rgba(255,255,255,.10);
+      --accent: #3987e5;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface-1: #1a1a19;
+    --text-primary: #ffffff; --text-secondary: #c3c2b7; --muted: #898781;
+    --grid: #2c2c2a; --baseline: #383835; --border: rgba(255,255,255,.10);
+    --accent: #3987e5;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--page); color: var(--text-primary);
+         font: 15px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 20px 14px 60px; }
+  header h1 { font-size: 1.45rem; margin: 6px 0 4px; }
+  header p { color: var(--text-secondary); margin: 0 0 4px; }
+  .small { font-size: .82rem; color: var(--muted); }
+  a { color: var(--accent); }
+  .card { background: var(--surface-1); border: 1px solid var(--border);
+          border-radius: 12px; padding: 16px; margin-bottom: 16px; }
+  .card h2 { font-size: 1.05rem; margin: 0 0 8px; }
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+  .tile { background: var(--surface-1); border: 1px solid var(--border);
+          border-radius: 12px; padding: 14px; }
+  .tile .v { font-size: 1.7rem; font-weight: 700; }
+  .tile .l { font-size: .8rem; color: var(--muted); }
+  .tile .s { font-size: .8rem; color: var(--text-secondary); margin-top: 4px; }
+  .chart { width: 100%; height: auto; border-radius: 8px; background: #fcfcfb; }
+  .tablebox { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: .86rem; min-width: 560px; }
+  th, td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--grid); }
+  th { color: var(--text-secondary); border-bottom-color: var(--baseline); }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  footer { color: var(--muted); font-size: .8rem; margin-top: 10px; }
+  .note { font-size: .84rem; color: var(--text-secondary); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="small"><a href="index.html">← Income opportunities dashboard</a> · <a href="actions.html">Recommended actions</a> · <a href="../eo-monitor/site/index.html">EO Monitor</a></p>
+    <h1>💶 Life Plan — statistical path to financial freedom</h1>
+    <p>10,000 Monte Carlo paths × 25 years, monthly steps, real €. From: geodesy student, €0 saved, 25 h/wk → target: €4,000/mo passive (€1.2M at 4% SWR).</p>
+    <p class="small" id="meta">Loading results…</p>
+  </header>
+
+  <div class="tiles" id="tiles"></div>
+
+  <div class="card" style="margin-top:16px">
+    <h2>Net worth projection (baseline)</h2>
+    <img class="chart" src="../data/lifeplan/networth_fan.png" alt="Net worth fan chart with FI tier lines">
+  </div>
+
+  <div class="card">
+    <h2>Probability of reaching each tier</h2>
+    <img class="chart" src="../data/lifeplan/fi_probability.png" alt="Probability of reaching each FI tier by year">
+  </div>
+
+  <div class="card">
+    <h2>Where the income comes from</h2>
+    <img class="chart" src="../data/lifeplan/income_composition.png" alt="Median monthly income by stream">
+  </div>
+
+  <div class="card">
+    <h2>What actually moves the date</h2>
+    <img class="chart" src="../data/lifeplan/sensitivity.png" alt="Sensitivity tornado chart">
+    <p class="note">The salary track (remote-EU vs. local) is worth ±16 years — more than every other lever combined. Full interpretation, phase-by-phase playbook and decision gates: <a id="planlink" href="https://github.com/grgurgemini-spec/financial-research-/blob/main/LIFEPLAN.md">LIFEPLAN.md</a>. See the <a href="actions.html">recommended actions</a> to execute this plan.</p>
+  </div>
+
+  <div class="card">
+    <h2>Scenario comparison — median crossing years</h2>
+    <div class="tablebox"><table>
+      <thead><tr><th>Scenario</th><th class="num">Lean €450k</th><th class="num">Comfortable €750k</th><th class="num">Fat €1.2M</th><th class="num">Fat lifetime prob.</th></tr></thead>
+      <tbody id="scenarios"></tbody>
+    </table></div>
+  </div>
+
+  <footer>Model: <code>lifeplan/model.py</code> (seeded, reproducible) · assumptions anchored on the <a href="index.html">researched income data</a> · real (inflation-adjusted) EUR · a model shows consequences of assumptions — it is not a forecast, and not financial advice.</footer>
+</div>
+<script>
+"use strict";
+fetch("../data/lifeplan/results.json").then(r => r.json()).then(R => {
+  document.getElementById("meta").textContent =
+    `Simulated ${R.meta.generated} · ${R.meta.n_paths.toLocaleString()} paths · seed ${R.meta.seed}`;
+  const B = R.scenarios["baseline"].fi;
+  const tiers = [
+    ["lean (1.5k/mo)", "Lean FI · €450k"],
+    ["comfortable (2.5k/mo)", "Comfortable FI · €750k"],
+    ["fat (4k/mo)", "Fat FI · €1.2M (your target)"],
+  ];
+  document.getElementById("tiles").innerHTML = tiers.map(([k, label]) => {
+    const f = B[k];
+    return `<div class="tile"><div class="v">${f.median_year ?? "—"}</div>` +
+      `<div class="l">${label} — median year</div>` +
+      `<div class="s">${Math.round(f.prob_ever * 100)}% lifetime · lucky ${f.p10_year ?? "—"} · unlucky ${f.p90_year ?? "beyond 2051"}</div></div>`;
+  }).join("");
+  const names = { "baseline": "Baseline", "no-product": "No product",
+                  "aggressive": "Aggressive remote", "croatia-local": "Local Croatian salary" };
+  document.getElementById("scenarios").innerHTML = Object.entries(R.scenarios).map(([k, s]) => {
+    const f = s.fi;
+    const y = t => f[t].median_year ?? "—";
+    return `<tr><td>${names[k] ?? k}</td><td class="num">${y("lean (1.5k/mo)")}</td>` +
+      `<td class="num">${y("comfortable (2.5k/mo)")}</td><td class="num">${y("fat (4k/mo)")}</td>` +
+      `<td class="num">${Math.round(f["fat (4k/mo)"].prob_ever * 100)}%</td></tr>`;
+  }).join("");
+}).catch(() => {
+  document.getElementById("meta").textContent =
+    "Could not load results.json — serve the repo root (python -m http.server) and open /site/lifeplan.html.";
+});
+</script>
+</body>
+</html>
