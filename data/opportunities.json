@@ -1,0 +1,819 @@
+{
+  "meta": {
+    "generated": "2026-07-18",
+    "currency": "EUR",
+    "income_definition": "Realistic monthly income range after ~6 months of consistent part-time effort, net of platform fees, before Croatian tax/contributions.",
+    "scoring_formula": "total = 0.40*income_score + 0.30*ease_score + 0.15*automation_score + 0.15*lowrisk_score; income_score = 10*log10(income_mid)/log10(20000) capped to [0,10]; ease_score = mean(skill_component, speed_component, cost_component) where skill_component=(5-skill)/4*10, speed_component=10-(days_to_first_eur/90*10) capped, cost_component=10-(upfront_cost/500*10) capped; automation_score = automation_pct/10; lowrisk_score = (5-risk)/4*10",
+    "skill_scale": "1 = anyone with Claude Code and patience; 3 = comfortable with code/Claude Code output review; 5 = specialist",
+    "risk_scale": "1 = almost guaranteed some income; 5 = lottery-like or ToS/legal/capital risk"
+  },
+  "opportunities": [
+    {
+      "id": "freelance-automation",
+      "name": "Freelance automation & scripting gigs (Upwork/Fiverr/Freelancer)",
+      "category": "freelance",
+      "description": "Sell small Python/web automations, scrapers, data cleaning, Excel/API glue. Claude Code writes 80% of the code; you handle clients and QA. Median Upwork rate for Python/scraping is ~$30/hr (range $20-40, top freelancers $50-100+). Realistic beginner arc: EUR 300-1,500 in month one, EUR 2,000-5,000/mo by month 3-6.",
+      "income_low": 300,
+      "income_mid": 1500,
+      "income_high": 4500,
+      "time_to_first_eur_days": 10,
+      "hours_per_week": 15,
+      "skill": 2,
+      "upfront_cost_eur": 40,
+      "automation_pct": 30,
+      "risk": 2,
+      "croatia_notes": "Upwork/Fiverr fully available; payout via Payoneer or Wise to EUR account. Upwork fee ~10%.",
+      "first_steps": [
+        "Create an Upwork profile around one niche (e.g. 'web scraping & price monitoring')",
+        "Use your pokusaj tracker as the portfolio piece",
+        "Bid on 10-15 small (<EUR 200) jobs to build reviews"
+      ],
+      "links": [
+        "https://www.upwork.com/hire/web-scrapers/cost/",
+        "https://www.upwork.com/resources/upwork-hourly-rates",
+        "https://www.freelancer.com/jobs/claude-code"
+      ],
+      "scores": {
+        "income": 7.38,
+        "ease": 8.53,
+        "automation": 3.0,
+        "lowrisk": 7.5,
+        "total": 7.09
+      }
+    },
+    {
+      "id": "etsy-digital",
+      "name": "Etsy/Gumroad digital products factory",
+      "category": "automated",
+      "description": "Claude Code + image tooling generates niche planners, templates, maps and wall art; Etsy brings the buyers (95M active buyers vs 7.5M sellers). Realistic: EUR 100-500 in month one, EUR 1,000-3,000/mo after 3-6 months of consistent listing (200+ listings for the upper end). Generic niches are saturated; hyper-specific ones still work. As a geodesist: custom city/terrain map posters are a proven niche.",
+      "income_low": 100,
+      "income_mid": 500,
+      "income_high": 3000,
+      "time_to_first_eur_days": 30,
+      "hours_per_week": 6,
+      "skill": 1,
+      "upfront_cost_eur": 60,
+      "automation_pct": 80,
+      "risk": 3,
+      "croatia_notes": "Etsy supports Croatian sellers with Payoneer payouts; listing fee $0.20 + ~9.5% total fees.",
+      "first_steps": [
+        "Automate a map-poster generator (OSM data + your cartography taste) with Claude Code",
+        "List 30-50 hyper-specific designs (Croatian coastal towns, hiking areas)",
+        "Reinvest in whichever niche gets favorites/sales"
+      ],
+      "links": [
+        "https://www.listifyai.net/blog/etsy-digital-downloads-guide-2026",
+        "https://digitalbizplr.com/blogs/learn/best-digital-products-sell-etsy-2026"
+      ],
+      "scores": {
+        "income": 6.28,
+        "ease": 8.49,
+        "automation": 8.0,
+        "lowrisk": 5.0,
+        "total": 7.01
+      }
+    },
+    {
+      "id": "local-websites",
+      "name": "Websites & tools for local (Croatian) small businesses",
+      "category": "freelance",
+      "description": "Build simple sites, booking forms, menu pages, and small business automations for local clients who will never use Upwork. Claude Code makes each site a weekend job. EUR 300-800 per site plus optional EUR 10-30/mo maintenance retainers that stack up.",
+      "income_low": 300,
+      "income_mid": 1000,
+      "income_high": 2500,
+      "time_to_first_eur_days": 21,
+      "hours_per_week": 10,
+      "skill": 2,
+      "upfront_cost_eur": 60,
+      "automation_pct": 40,
+      "risk": 2,
+      "croatia_notes": "No platform fees; invoice via pausalni obrt. Local trust + no international competition is the edge.",
+      "first_steps": [
+        "Build 2 demo sites (cafe, tradesman) with Claude Code in one weekend",
+        "Walk/email local businesses with outdated sites",
+        "Offer a fixed price + small monthly hosting/maintenance retainer"
+      ],
+      "links": [
+        "https://www.upwork.com/resources/upwork-hourly-rates"
+      ],
+      "scores": {
+        "income": 6.98,
+        "ease": 7.99,
+        "automation": 4.0,
+        "lowrisk": 7.5,
+        "total": 6.91
+      }
+    },
+    {
+      "id": "gis-freelance",
+      "name": "GIS / Earth Engine / QGIS freelancing (Upwork, Fiverr)",
+      "category": "geospatial",
+      "description": "Spatial analysis, land-use mapping, Earth Engine scripts, QGIS automation, map production. Typical advertised rates $20-30/hr, specialized GEE/remote-sensing work $50+. Claude Code writes GEE JavaScript/Python and PyQGIS far faster than most incumbents work, and your geodesy background beats generic devs. Demand spans agriculture, climate risk, urban planning.",
+      "income_low": 300,
+      "income_mid": 1200,
+      "income_high": 3500,
+      "time_to_first_eur_days": 14,
+      "hours_per_week": 12,
+      "skill": 3,
+      "upfront_cost_eur": 40,
+      "automation_pct": 40,
+      "risk": 2,
+      "croatia_notes": "Fully remote-friendly category; EU timezone is an asset for European clients.",
+      "first_steps": [
+        "Portfolio: 3 GEE demos (NDVI change, flood mapping, urban growth) built with Claude Code",
+        "List on Upwork under Remote Sensing + QGIS categories",
+        "Undercut slightly until 5 reviews, then raise to EUR 40-60/hr"
+      ],
+      "links": [
+        "https://www.upwork.com/hire/remote-sensing-freelancers/",
+        "https://www.upwork.com/freelance-jobs/gis/",
+        "https://www.fiverr.com/categories/data/data-visualization/gis"
+      ],
+      "scores": {
+        "income": 7.16,
+        "ease": 7.55,
+        "automation": 4.0,
+        "lowrisk": 7.5,
+        "total": 6.85
+      }
+    },
+    {
+      "id": "tech-writing",
+      "name": "Technical writing & documentation with Claude",
+      "category": "freelance",
+      "description": "Documentation, tutorials, API references for dev tools; Claude drafts, you verify by actually running the code with Claude Code. Fastest category to first payment (7-14 days on Upwork/Fiverr). Rates $30-60/hr for credible technical writers.",
+      "income_low": 200,
+      "income_mid": 800,
+      "income_high": 2000,
+      "time_to_first_eur_days": 10,
+      "hours_per_week": 8,
+      "skill": 2,
+      "upfront_cost_eur": 20,
+      "automation_pct": 50,
+      "risk": 3,
+      "croatia_notes": "English proficiency required; heavy AI-content competition means verified, runnable examples are the differentiator.",
+      "first_steps": [
+        "Write 2-3 sample tutorials (e.g. 'automate QGIS with Python')",
+        "Publish them on dev.to/Medium as portfolio",
+        "Pitch dev-tool companies and Upwork writing gigs"
+      ],
+      "links": [
+        "https://aihustlhq.com/make-money-with-claude-ai/"
+      ],
+      "scores": {
+        "income": 6.75,
+        "ease": 8.66,
+        "automation": 5.0,
+        "lowrisk": 5.0,
+        "total": 6.8
+      }
+    },
+    {
+      "id": "map-webdev",
+      "name": "Google Maps Platform / web-map development",
+      "category": "geospatial",
+      "description": "Store locators, delivery-zone maps, interactive tourism/real-estate maps, Leaflet/MapLibre dashboards. Sits between web dev and GIS, so it pays web-dev rates ($30-60/hr) while your geo background removes the usual pain (projections, geocoding quality). Steady demand from agencies that can't do maps.",
+      "income_low": 300,
+      "income_mid": 1000,
+      "income_high": 3000,
+      "time_to_first_eur_days": 21,
+      "hours_per_week": 10,
+      "skill": 3,
+      "upfront_cost_eur": 40,
+      "automation_pct": 45,
+      "risk": 2,
+      "croatia_notes": "Croatian tourism sector = constant demand for interactive maps (apartments, marinas, trails).",
+      "first_steps": [
+        "Build 2 demos: tourism map + store locator (MapLibre, free tiles)",
+        "Pitch web agencies as their on-call 'map guy'",
+        "List a productized 'store locator in 48h' gig on Fiverr"
+      ],
+      "links": [
+        "https://www.upwork.com/hire/google-earth-freelancers/",
+        "https://www.fiverr.com/categories/data/data-visualization/gis"
+      ],
+      "scores": {
+        "income": 6.98,
+        "ease": 7.29,
+        "automation": 4.5,
+        "lowrisk": 7.5,
+        "total": 6.78
+      }
+    },
+    {
+      "id": "scraping-apis",
+      "name": "Sell scrapers & data APIs (Apify Store / RapidAPI)",
+      "category": "automated",
+      "description": "Package scrapers as pay-per-result Apify actors or freemium RapidAPI endpoints. Platforms handle billing, hosting, customers; you keep ~80%. Top solo devs earn $10-50k/mo on Apify; a realistic first-year target for a few well-chosen niche actors is EUR 50-500/mo growing with catalog size. Near-perfect fit for your existing scraping skills, and income is ~90% passive after publishing.",
+      "income_low": 50,
+      "income_mid": 500,
+      "income_high": 3000,
+      "time_to_first_eur_days": 30,
+      "hours_per_week": 5,
+      "skill": 3,
+      "upfront_cost_eur": 40,
+      "automation_pct": 90,
+      "risk": 3,
+      "croatia_notes": "Apify pays out from $20 (PayPal) / $100 (bank); RapidAPI takes 20%. Scraping ToS risk varies by target site.",
+      "first_steps": [
+        "Port your Cardmarket/Scryfall pipeline into an Apify actor (pay-per-result)",
+        "Publish 3-5 niche actors nobody else offers (Croatian/EU data sources are underserved)",
+        "Iterate on whichever gets organic installs"
+      ],
+      "links": [
+        "https://apify.com/partners/actor-developers",
+        "https://docs.apify.com/platform/actors/publishing/monetize",
+        "https://1xapi.com/blog/how-to-monetize-api-rapidapi-pricing-strategy-usage-tracking-2026"
+      ],
+      "scores": {
+        "income": 6.28,
+        "ease": 6.96,
+        "automation": 9.0,
+        "lowrisk": 5.0,
+        "total": 6.7
+      }
+    },
+    {
+      "id": "photogrammetry-processing",
+      "name": "Drone photogrammetry processing (desk-only, others' data)",
+      "category": "geospatial",
+      "description": "Process other pilots' aerial data into orthomosaics, DEMs, 3D models using WebODM (free) or Metashape - no drone or flying needed, fully remote. US drone-mapping desk rates average $29-48/hr; part-time operators bill EUR 2,000-5,000/mo with 2-3 steady clients. Many small survey/drone firms outsource exactly this. Your geodesy training (datums, GCPs, accuracy reporting) is the differentiator; Claude Code automates the WebODM/GDAL pipelines around it.",
+      "income_low": 300,
+      "income_mid": 1000,
+      "income_high": 3000,
+      "time_to_first_eur_days": 30,
+      "hours_per_week": 10,
+      "skill": 3,
+      "upfront_cost_eur": 50,
+      "automation_pct": 60,
+      "risk": 3,
+      "croatia_notes": "Croatian/regional drone operators and surveyors are potential direct clients; WebODM keeps software cost at zero.",
+      "first_steps": [
+        "Set up an automated WebODM pipeline (upload -> processed deliverables) with Claude Code",
+        "Process one public dataset into a showcase report with accuracy stats",
+        "Pitch drone pilots and survey offices (they hate the desk work)"
+      ],
+      "links": [
+        "https://blog.emlid.com/why-get-into-drone-mapping-salary-pros-cons-opportunities/",
+        "https://www.upwork.com/hire/photogrammetry-freelancers/",
+        "https://www.ziprecruiter.com/Jobs/Drone-Photogrammetry"
+      ],
+      "scores": {
+        "income": 6.98,
+        "ease": 6.89,
+        "automation": 6.0,
+        "lowrisk": 5.0,
+        "total": 6.51
+      }
+    },
+    {
+      "id": "tcg-arbitrage-alerts",
+      "name": "TCG price-tracking & arbitrage alert service (paid Discord/newsletter)",
+      "category": "automated",
+      "description": "Extend your pokusaj tracker into a subscription product: automated Cardmarket/TCGplayer/eBay price-gap alerts, buyout detection, and precon value tracking, delivered via paid Discord or newsletter at EUR 5-15/mo. Commercial precedents exist (TCGSniper, TCG Price Tracker, SleeveIQ) which proves demand - your edge is EU/Cardmarket depth and Croatian/EU seller data nobody else covers. Pipeline runs itself on GitHub Actions.",
+      "income_low": 50,
+      "income_mid": 400,
+      "income_high": 1500,
+      "time_to_first_eur_days": 45,
+      "hours_per_week": 4,
+      "skill": 3,
+      "upfront_cost_eur": 50,
+      "automation_pct": 90,
+      "risk": 3,
+      "croatia_notes": "Cardmarket ToS prohibits scraping - build on Scryfall/official data where possible and keep scraped extras personal-risk. Stripe/Discord monetization works from Croatia.",
+      "first_steps": [
+        "Add price-gap (Cardmarket EUR vs TCGplayer USD) alerts to the existing pipeline",
+        "Post free daily alerts to Reddit/Discord MTG-finance groups for 2 months to build audience",
+        "Gate the fast/full alerts behind a EUR 5-10/mo tier"
+      ],
+      "links": [
+        "https://tcgpricetracker.com/",
+        "https://tcgsniper.com/",
+        "https://rippr.app/blog/topic-market-analysis-1783323152716-6176-market-cardmarket-eu-us-arbitrage-2026-"
+      ],
+      "scores": {
+        "income": 6.05,
+        "ease": 6.33,
+        "automation": 9.0,
+        "lowrisk": 5.0,
+        "total": 6.42
+      }
+    },
+    {
+      "id": "ai-training-platforms",
+      "name": "AI training / RLHF work (Outlier, DataAnnotation, Toloka, Mercor)",
+      "category": "freelance",
+      "description": "Paid tasks reviewing AI outputs, writing prompts, coding evaluations. Pay: $10-15/hr basic annotation, $20-40/hr coding/STEM tiers, $200+/hr for rare domain experts (Mercor/Scale). Fully flexible hours, work whenever you want. Pay is region-tiered so Croatian rates can be below US rates.",
+      "income_low": 200,
+      "income_mid": 600,
+      "income_high": 1500,
+      "time_to_first_eur_days": 7,
+      "hours_per_week": 10,
+      "skill": 2,
+      "upfront_cost_eur": 0,
+      "automation_pct": 0,
+      "risk": 2,
+      "croatia_notes": "Outlier operates in 61 countries, Toloka 100+, Appen 130+; check Croatia eligibility per project. Using AI to do the tasks violates ToS - this one is real human hours.",
+      "first_steps": [
+        "Sign up on Outlier, DataAnnotation and Mindrift with STEM/geodesy credentials",
+        "Pass the coding/math qualification tests (they gate the $20-40/hr tiers)",
+        "Track which platform actually feeds you tasks and drop the rest"
+      ],
+      "links": [
+        "https://outlier.ai/",
+        "https://remotestack.in/ai-training-jobs",
+        "https://remowork.life/blog/top-ai-training-platforms-that-pay-you-to-train-ai-models-in-2026"
+      ],
+      "scores": {
+        "income": 6.46,
+        "ease": 8.91,
+        "automation": 0.0,
+        "lowrisk": 7.5,
+        "total": 6.38
+      }
+    },
+    {
+      "id": "ai-consulting",
+      "name": "AI-automation consulting for SMBs",
+      "category": "freelance",
+      "description": "Set up Claude/automation workflows for small businesses (document processing, report generation, data pipelines). One practitioner reports $4,200/mo as an AI-automation freelancer; AI consulting has the highest ceiling of service work ($75-150/hr for credible specialists). Requires client-facing confidence more than deep code skills - Claude Code does the building.",
+      "income_low": 500,
+      "income_mid": 2000,
+      "income_high": 6000,
+      "time_to_first_eur_days": 30,
+      "hours_per_week": 12,
+      "skill": 3,
+      "upfront_cost_eur": 60,
+      "automation_pct": 30,
+      "risk": 3,
+      "croatia_notes": "Croatian SMBs are early on the AI adoption curve - less competition, but also more education needed per sale. EU AI Act literacy is a selling point.",
+      "first_steps": [
+        "Automate one real workflow for a friendly local business free/cheap as case study",
+        "Package 2-3 fixed-price offers (e.g. 'invoice processing bot, EUR 800')",
+        "Ask every client for a referral"
+      ],
+      "links": [
+        "https://medium.com/codetodeploy/how-i-make-4-200-month-as-an-ai-automation-freelancer-using-claude-code-and-gemini-ea0da4df8f30",
+        "https://aibusiness.vc/solo/make-money-with-claude-ai"
+      ],
+      "scores": {
+        "income": 7.67,
+        "ease": 6.82,
+        "automation": 3.0,
+        "lowrisk": 5.0,
+        "total": 6.32
+      }
+    },
+    {
+      "id": "eo-contracting",
+      "name": "Part-time remote EO/GIS contracting (specialist job boards)",
+      "category": "geospatial",
+      "description": "Contract roles via Space-Careers, GEO CAREERS, EGU jobs, Earthworks, the EO-jobs GitHub list. Remote GIS roles post $21-115/hr (analyst average ~$58-120k/yr, remote discount only ~10%). Least flexible option here (set hours/deliverables) but highest reliable rate; part-time contracts exist and EU/Copernicus ecosystem keeps growing.",
+      "income_low": 800,
+      "income_mid": 2000,
+      "income_high": 5000,
+      "time_to_first_eur_days": 45,
+      "hours_per_week": 20,
+      "skill": 4,
+      "upfront_cost_eur": 0,
+      "automation_pct": 20,
+      "risk": 2,
+      "croatia_notes": "EU citizenship simplifies contracting with European space-sector firms; Croatian membership in ESA (associate) is expanding national opportunities.",
+      "first_steps": [
+        "Set alerts on space-careers.com, geo-careers.com and the EO-jobs GitHub list",
+        "Target contract/part-time listings only",
+        "Lead applications with automation skills (Python+Claude Code+GEE) - they're scarce in classic GIS teams"
+      ],
+      "links": [
+        "https://www.space-careers.com/jobs/remote_sensing_optics_and_gis",
+        "https://www.geo-careers.com/",
+        "https://github.com/DahnJ/EO-jobs",
+        "https://www.egu.eu/jobs/"
+      ],
+      "scores": {
+        "income": 7.67,
+        "ease": 5.83,
+        "automation": 2.0,
+        "lowrisk": 7.5,
+        "total": 6.24
+      }
+    },
+    {
+      "id": "hivemapper",
+      "name": "Dashcam drive-to-earn mapping (Bee Maps/Hivemapper)",
+      "category": "geospatial",
+      "description": "Mount a Bee dashcam, drive, earn HONEY tokens for fresh street imagery. Genuinely passive and geospatial, but earnings for individual contributors are modest and decay 50-70% on repeated routes within months. In a less-mapped country like Croatia fresh-road multipliers help. Hardware via $19/mo subscription. Expect pocket money, not income.",
+      "income_low": 10,
+      "income_mid": 50,
+      "income_high": 200,
+      "time_to_first_eur_days": 14,
+      "hours_per_week": 0,
+      "skill": 1,
+      "upfront_cost_eur": 220,
+      "automation_pct": 95,
+      "risk": 3,
+      "croatia_notes": "Croatia's coverage is thinner than US/Germany - freshness bonuses likely better; token payout = crypto volatility + tax reporting.",
+      "first_steps": [
+        "Check Hivemapper coverage map for your regular routes",
+        "Only buy in if your routes show low coverage",
+        "Treat HONEY-EUR conversion as taxable income"
+      ],
+      "links": [
+        "https://oneshekel.com/how-much-does-a-hivemapper-dashcam-actually-make-per-month-real-data-2026/",
+        "https://docs.hivemapper.com/honey-token/earning-honey/"
+      ],
+      "scores": {
+        "income": 3.95,
+        "ease": 8.01,
+        "automation": 9.5,
+        "lowrisk": 5.0,
+        "total": 6.16
+      }
+    },
+    {
+      "id": "geo-annotation",
+      "name": "Satellite imagery annotation & geospatial AI training data",
+      "category": "geospatial",
+      "description": "Label satellite/aerial imagery for computer-vision models (buildings, roads, crops, SAR features) on platforms like Labelbox marketplaces, iMerit, and AI-training platforms with geospatial projects. Entry image labeling pays only $12-20/hr, but domain-qualified geospatial/SAR annotation and QA sits higher, and full remote satellite-imagery analyst roles average ~$77k/yr. Completely flexible microtask end; less flexible analyst end.",
+      "income_low": 200,
+      "income_mid": 600,
+      "income_high": 2000,
+      "time_to_first_eur_days": 14,
+      "hours_per_week": 10,
+      "skill": 2,
+      "upfront_cost_eur": 0,
+      "automation_pct": 10,
+      "risk": 3,
+      "croatia_notes": "Region-tiered pay may lower Croatian rates on big platforms; specialized EO projects pay on skill instead.",
+      "first_steps": [
+        "Register on Outlier/Toloka/iMerit flagging GIS+remote-sensing expertise",
+        "Also watch Labelbox/Scale for dedicated geospatial projects",
+        "Use it as flexible filler income between bigger gigs"
+      ],
+      "links": [
+        "https://www.ziprecruiter.com/Jobs/Remote-Satellite-Imagery-Analyst",
+        "https://jobright.ai/blog/data-annotation-jobs-guide/",
+        "https://www.virtualvocations.com/blog/remote-jobs/10-remote-gis-jobs-hiring-now-plus-the-skills-employers-want-most/"
+      ],
+      "scores": {
+        "income": 6.46,
+        "ease": 8.65,
+        "automation": 1.0,
+        "lowrisk": 5.0,
+        "total": 6.08
+      }
+    },
+    {
+      "id": "automation-templates",
+      "name": "Sell automation templates (n8n/Make/GitHub Actions/Notion)",
+      "category": "product",
+      "description": "Package the automations you build anyway as sellable templates on Gumroad and template marketplaces. Small per-unit prices (EUR 10-50) but zero marginal cost and compounding catalog. Modest but very low effort per additional unit once the first few sell.",
+      "income_low": 0,
+      "income_mid": 150,
+      "income_high": 1000,
+      "time_to_first_eur_days": 45,
+      "hours_per_week": 3,
+      "skill": 2,
+      "upfront_cost_eur": 20,
+      "automation_pct": 80,
+      "risk": 4,
+      "croatia_notes": "Gumroad pays out via Payoneer/bank to Croatia.",
+      "first_steps": [
+        "Turn each client automation into an anonymized template",
+        "List on Gumroad + n8n community templates",
+        "Bundle related templates into EUR 30-50 packs"
+      ],
+      "links": [
+        "https://www.sabrina.dev/p/12-ways-to-make-money-with-claude"
+      ],
+      "scores": {
+        "income": 5.06,
+        "ease": 7.37,
+        "automation": 8.0,
+        "lowrisk": 2.5,
+        "total": 5.81
+      }
+    },
+    {
+      "id": "chrome-extension",
+      "name": "Chrome extension (freemium)",
+      "category": "product",
+      "description": "Build a niche browser extension with Claude Code, monetize via freemium (ExtensionPay/Stripe). Benchmarks: EUR 100-500/mo within 6-12 months at 1,000-5,000 users; EUR 1,000-3,000/mo at 5,000-20,000 users. 2-5% free-to-paid conversion typical. Sellable later at 24-40x monthly revenue.",
+      "income_low": 0,
+      "income_mid": 300,
+      "income_high": 2500,
+      "time_to_first_eur_days": 60,
+      "hours_per_week": 6,
+      "skill": 3,
+      "upfront_cost_eur": 30,
+      "automation_pct": 75,
+      "risk": 4,
+      "croatia_notes": "Chrome Web Store dev fee $5 one-off; Stripe works in Croatia.",
+      "first_steps": [
+        "Pick a niche you know (e.g. Cardmarket power-user tools)",
+        "Ship MVP in a weekend with Claude Code",
+        "Add ExtensionPay paywall only after ~1,000 users"
+      ],
+      "links": [
+        "https://chromegoldmine.com/blog/chrome-extension-monetization/chrome-extension-revenue-benchmarks/",
+        "https://extensionpay.com/articles/browser-extensions-make-money"
+      ],
+      "scores": {
+        "income": 5.76,
+        "ease": 5.91,
+        "automation": 7.5,
+        "lowrisk": 2.5,
+        "total": 5.58
+      }
+    },
+    {
+      "id": "automated-newsletter",
+      "name": "Automated niche newsletter (AI-curated)",
+      "category": "automated",
+      "description": "A Claude Code pipeline aggregates niche news/RSS/price data, drafts a digest, and ships it via beehiiv/Substack on schedule. Median paid conversion is only 0.62%, so pick a niche with professional willingness to pay (e.g. 'EU TCG market weekly' or 'Adriatic EO/GIS tenders'). Sponsorships beat subscriptions at small scale.",
+      "income_low": 0,
+      "income_mid": 200,
+      "income_high": 1500,
+      "time_to_first_eur_days": 90,
+      "hours_per_week": 3,
+      "skill": 2,
+      "upfront_cost_eur": 30,
+      "automation_pct": 85,
+      "risk": 4,
+      "croatia_notes": "beehiiv/Substack + Stripe work from Croatia.",
+      "first_steps": [
+        "Pick a niche where you already have the data pipeline (TCG prices, geo tenders)",
+        "Automate draft generation; spend 20 min/issue on human final edit",
+        "Grow free list to ~1,000 before monetizing"
+      ],
+      "links": [
+        "https://medium.com/@automation.labs/6-ways-an-ai-newsletter-makes-money-two-scale-four-stall-b7ae05c3ac61"
+      ],
+      "scores": {
+        "income": 5.35,
+        "ease": 5.63,
+        "automation": 8.5,
+        "lowrisk": 2.5,
+        "total": 5.48
+      }
+    },
+    {
+      "id": "oss-bounties",
+      "name": "Open-source bounties (Algora)",
+      "category": "freelance",
+      "description": "Fix GitHub issues with attached bounties ($50-1,500 typical, occasionally $5-10k). Claude Code is built for this, but the market is agent-saturated in 2026: fresh bounties attract 8-158 competing PRs within hours. Treat as occasional topping, not a base income.",
+      "income_low": 0,
+      "income_mid": 150,
+      "income_high": 800,
+      "time_to_first_eur_days": 30,
+      "hours_per_week": 5,
+      "skill": 3,
+      "upfront_cost_eur": 20,
+      "automation_pct": 60,
+      "risk": 4,
+      "croatia_notes": "Paid via Stripe - works in Croatia.",
+      "first_steps": [
+        "Browse algora.io/bounties for niche repos (less competition than famous ones)",
+        "Pick bounties in stacks you know (Python/geo libraries)",
+        "Submit within hours of posting or not at all"
+      ],
+      "links": [
+        "https://algora.io/bounties",
+        "https://dev.to/zeroknowledge0x/the-open-source-money-map-every-way-developers-are-actually-making-money-in-2026-with-real-45ba"
+      ],
+      "scores": {
+        "income": 5.06,
+        "ease": 7.09,
+        "automation": 6.0,
+        "lowrisk": 2.5,
+        "total": 5.43
+      }
+    },
+    {
+      "id": "geo-saas",
+      "name": "Niche geospatial micro-SaaS (automated EO monitoring reports)",
+      "category": "geospatial",
+      "description": "The compounding play: an automated service that turns free Sentinel/Landsat data into subscription reports - vineyard/olive NDVI monitoring for Croatian agriculture, coastal construction change detection, solar-site suitability, illegal-dump detection for municipalities. Google Earth Engine does the compute free for prototyping; Claude Code builds the whole pipeline. Same risk profile as micro-SaaS but with a real moat: few competitors combine EO skills + automation + local market access.",
+      "income_low": 0,
+      "income_mid": 600,
+      "income_high": 5000,
+      "time_to_first_eur_days": 90,
+      "hours_per_week": 8,
+      "skill": 4,
+      "upfront_cost_eur": 100,
+      "automation_pct": 85,
+      "risk": 4,
+      "croatia_notes": "Croatian municipalities, agriculture cooperatives and tourism/real-estate firms are underserved; EU CAP subsidies push farms toward monitoring tools.",
+      "first_steps": [
+        "Prototype one report (e.g. monthly vineyard NDVI PDF) in GEE with Claude Code",
+        "Give it free to 3 local farms/co-ops for feedback",
+        "Productize at EUR 20-50/mo per monitored parcel bundle"
+      ],
+      "links": [
+        "https://earthengine.google.com/",
+        "https://www.vibrantsnap.com/blog/micro-saas-ideas-profitable-niches-2026"
+      ],
+      "scores": {
+        "income": 6.46,
+        "ease": 3.5,
+        "automation": 8.5,
+        "lowrisk": 2.5,
+        "total": 5.28
+      }
+    },
+    {
+      "id": "card-arbitrage-flipping",
+      "name": "Cross-market card arbitrage (buy Cardmarket, sell TCGplayer/eBay)",
+      "category": "automated",
+      "description": "Use your own tracker to find and exploit EU-US price gaps yourself. Rule-of-thumb from 2026 analyses: cross-border arbitrage clears fees only on cards worth roughly $150+; gaps >7% typically close within 48h. Fees: Cardmarket 5-8%, TCGplayer 10-15%, eBay ~13%. Needs starting capital and shipping logistics; the finding part is fully automatable, the shipping part is not.",
+      "income_low": 0,
+      "income_mid": 300,
+      "income_high": 1200,
+      "time_to_first_eur_days": 30,
+      "hours_per_week": 5,
+      "skill": 3,
+      "upfront_cost_eur": 500,
+      "automation_pct": 60,
+      "risk": 4,
+      "croatia_notes": "EU-based buying on Cardmarket is your natural advantage (no import duties, cheap EU shipping). Selling to US adds customs paperwork.",
+      "first_steps": [
+        "Add an arbitrage screener (gap % minus all fees) to your tracker",
+        "Paper-trade the signals for a month to measure real margins",
+        "Start with EUR 300-500 capital on 2-3 high-value cards"
+      ],
+      "links": [
+        "https://rippr.app/blog/topic-market-analysis-1783323152716-6176-market-cardmarket-eu-us-arbitrage-2026-",
+        "https://www.sleeveiq.com/prices/arbitrage"
+      ],
+      "scores": {
+        "income": 5.76,
+        "ease": 3.89,
+        "automation": 6.0,
+        "lowrisk": 2.5,
+        "total": 4.75
+      }
+    },
+    {
+      "id": "mcp-plugins",
+      "name": "MCP servers & Claude Code plugins/skills",
+      "category": "product",
+      "description": "Publish MCP servers or Claude Code skills to the growing marketplaces (8,800+ listings; official marketplace has ~100 vetted plugins). Direct monetization is still weak in 2026 - most are free, money flows via hosted usage (Smithery) or the consulting/reputation they generate. Strategic play: a respected geo-MCP server (QGIS/GDAL/Earth Engine tools) positions you for the freelance work above.",
+      "income_low": 0,
+      "income_mid": 100,
+      "income_high": 1000,
+      "time_to_first_eur_days": 90,
+      "hours_per_week": 4,
+      "skill": 3,
+      "upfront_cost_eur": 20,
+      "automation_pct": 70,
+      "risk": 4,
+      "croatia_notes": "No payout barriers since monetization is mostly indirect.",
+      "first_steps": [
+        "Build an MCP server exposing GDAL/QGIS operations to Claude",
+        "Publish to Smithery + claudemarketplaces.com",
+        "Use it as the portfolio anchor for geo-automation freelancing"
+      ],
+      "links": [
+        "https://claudemarketplaces.com/",
+        "https://www.totalum.app/blog/agent-skills-marketplaces-2026"
+      ],
+      "scores": {
+        "income": 4.65,
+        "ease": 4.87,
+        "automation": 7.0,
+        "lowrisk": 2.5,
+        "total": 4.75
+      }
+    },
+    {
+      "id": "micro-saas",
+      "name": "Micro-SaaS",
+      "category": "product",
+      "description": "A small subscription web app solving one niche problem. Reality check: ~70% of micro-SaaS earn under EUR 1,000 MRR and 54% of launched products earn zero; the median profitable one sits near EUR 4,000 MRR. AI cuts build time from months to days, which also means more competition. Highest ceiling outside a job, highest variance too.",
+      "income_low": 0,
+      "income_mid": 500,
+      "income_high": 8000,
+      "time_to_first_eur_days": 90,
+      "hours_per_week": 10,
+      "skill": 4,
+      "upfront_cost_eur": 100,
+      "automation_pct": 70,
+      "risk": 5,
+      "croatia_notes": "Stripe available in Croatia; register pausalni obrt before charging.",
+      "first_steps": [
+        "Validate demand before building (waitlist/landing page)",
+        "Build in a niche where you have unfair knowledge (geodesy, TCG)",
+        "Charge from day one; kill it fast if nobody pays"
+      ],
+      "links": [
+        "https://www.buildmvpfast.com/blog/saas-only-way-out-indie-hacker-dream-desperation-2026",
+        "https://ideaproof.io/lists/micro-saas-ideas"
+      ],
+      "scores": {
+        "income": 6.28,
+        "ease": 3.5,
+        "automation": 7.0,
+        "lowrisk": 0.0,
+        "total": 4.61
+      }
+    },
+    {
+      "id": "programmatic-seo",
+      "name": "Programmatic SEO / AI content sites + affiliate",
+      "category": "automated",
+      "description": "Generate thousands of data-backed pages and monetize with ads/affiliate. In 2026 this is the riskiest automated play: ~60% of projects fail, Google's scaled-content-abuse policy actively targets thin AI pages, and AI Overviews eat clicks. Works only with unique data per URL (e.g. your price histories). Treat as an add-on to a data product, not a standalone bet.",
+      "income_low": 0,
+      "income_mid": 100,
+      "income_high": 2000,
+      "time_to_first_eur_days": 120,
+      "hours_per_week": 4,
+      "skill": 3,
+      "upfront_cost_eur": 100,
+      "automation_pct": 90,
+      "risk": 5,
+      "croatia_notes": "AdSense/affiliate networks pay to Croatia fine.",
+      "first_steps": [
+        "Only do this over proprietary data (per-card price pages already exist in pokusaj)",
+        "Add genuine per-URL value (charts, history, alerts signup)",
+        "Measure indexation before scaling page count"
+      ],
+      "links": [
+        "https://www.dualmedia.com/programmatic-seo-2026/",
+        "https://mst-sg.com/programmatic-seo-with-ai-when-it-works-when-it-backfires/"
+      ],
+      "scores": {
+        "income": 4.65,
+        "ease": 4.33,
+        "automation": 9.0,
+        "lowrisk": 0.0,
+        "total": 4.51
+      }
+    },
+    {
+      "id": "geo-competitions",
+      "name": "Geospatial ML competitions (Solafune, Kaggle, Zindi, SpaceNet, Copernicus Masters)",
+      "category": "geospatial",
+      "description": "Prize competitions on satellite/EO data: Solafune specializes in Sentinel-based tasks, Kaggle has a geospatial track, Copernicus Masters' prize pool exceeds EUR 1.5M, SpaceNet continues (SAR-optical registration in SpaceNet 9). Claude Code accelerates the engineering scaffold dramatically. Income is lottery-like, but even non-winning entries build the exact portfolio that unlocks the freelance/contract tiers above.",
+      "income_low": 0,
+      "income_mid": 100,
+      "income_high": 3000,
+      "time_to_first_eur_days": 120,
+      "hours_per_week": 8,
+      "skill": 4,
+      "upfront_cost_eur": 20,
+      "automation_pct": 30,
+      "risk": 5,
+      "croatia_notes": "Copernicus Masters is EU-centric - being in Croatia/EU is an eligibility advantage for several ESA challenges.",
+      "first_steps": [
+        "Enter one Solafune competition end-to-end for the workflow",
+        "Reuse the pipeline across competitions (they rhyme)",
+        "Publish solutions on GitHub as portfolio"
+      ],
+      "links": [
+        "https://solafune.com/",
+        "https://spacenet.ai/challenges/",
+        "https://www.esa.int/Applications/Observing_the_Earth/Copernicus/Copernicus_Masters_bigger_than_ever",
+        "https://mlcontests.com/"
+      ],
+      "scores": {
+        "income": 4.65,
+        "ease": 4.03,
+        "automation": 3.0,
+        "lowrisk": 0.0,
+        "total": 3.52
+      }
+    },
+    {
+      "id": "trading-bots",
+      "name": "Trading bots / crypto agent economy (NOT recommended)",
+      "category": "automated",
+      "description": "Claude Code can absolutely build trading bots and there are 12+ live platforms where AI agents earn crypto for tasks. Included for completeness: retail algo trading is negative-expectation after fees for most people, agent-economy earnings are tiny and unstable, and capital risk is total. If you want automation income, every other 'automated' row dominates this one.",
+      "income_low": 0,
+      "income_mid": 0,
+      "income_high": 500,
+      "time_to_first_eur_days": 60,
+      "hours_per_week": 5,
+      "skill": 4,
+      "upfront_cost_eur": 500,
+      "automation_pct": 95,
+      "risk": 5,
+      "croatia_notes": "Crypto gains are taxable in Croatia (10% + surtax after holding rules) - paperwork even when losing money overall.",
+      "first_steps": [
+        "Don't, or paper-trade only",
+        "If curious about the agent economy, read the platform list first",
+        "Cap any experiment at money you can lose entirely"
+      ],
+      "links": [
+        "https://dev.to/kirothebot/the-agent-economy-is-real-12-platforms-where-ai-agents-actually-earn-money-may-2026-5bm2",
+        "https://techcrunch.com/2026/06/30/crypto-exchange-okx-wants-ai-agents-to-hire-and-pay-each-other/"
+      ],
+      "scores": {
+        "income": 0.0,
+        "ease": 1.94,
+        "automation": 9.5,
+        "lowrisk": 0.0,
+        "total": 2.01
+      }
+    }
+  ]
+}
