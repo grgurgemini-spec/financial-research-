@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EO Monitor — AOI report</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛰️</text></svg>">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="small"><a href="index.html">← All areas</a></p>
+    <h1 id="title">Loading…</h1>
+    <p id="desc" class="desc"></p>
+    <p class="small" id="meta"></p>
+    <div id="flags"></div>
+  </header>
+
+  <div class="card">
+    <h2>Latest observation</h2>
+    <img id="mainmap" class="mapimg" alt="Latest index map">
+    <div class="gallery" id="gallery"></div>
+  </div>
+
+  <div class="card">
+    <h2 id="charttitle">Time series</h2>
+    <div class="legend" id="legend"></div>
+    <div id="chartbox">
+      <svg id="chart" viewBox="0 0 900 380" role="img" aria-label="Index time series"></svg>
+      <div id="tooltip"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Observations</h2>
+    <div class="tablebox">
+      <table>
+        <thead><tr><th>Date</th><th class="num">Mean index</th><th class="num">Area over threshold</th><th class="num">Valid pixels</th><th class="num">Scene cloud %</th><th>Flags</th></tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <footer>Copernicus Sentinel-2 data · cloud/shadow pixels masked via the scene classification layer · stats cover valid pixels only.</footer>
+</div>
+<script>
+"use strict";
+const FLAG_LABEL = { flood_detected: "⚠ Flood detected", ndvi_drop: "⚠ Vegetation drop", snowmelt_onset: "⚠ Snowmelt onset" };
+const id = new URLSearchParams(location.search).get("id");
+const base = `../data/${id}`;
+
+Promise.all([
+  fetch(`${base}/latest.json`).then(r => r.json()),
+  fetch(`${base}/timeseries.json`).then(r => r.json()),
+]).then(([meta, series]) => {
+  document.title = `EO Monitor — ${meta.name}`;
+  document.getElementById("title").textContent = meta.name;
+  document.getElementById("desc").textContent = meta.description;
+  document.getElementById("meta").textContent =
+    `${meta.index_label} · threshold ${meta.index_threshold} · ${meta.n_observations} observations · last run ${meta.last_run.replace("T", " ").replace("+00:00", " UTC")}`;
+  const latestFlags = (meta.latest && meta.latest.flags) || [];
+  document.getElementById("flags").innerHTML = latestFlags.length
+    ? latestFlags.map(f => `<span class="flag">${FLAG_LABEL[f] || f}</span>`).join("")
+    : `<span class="flag ok">✓ No active alerts</span>`;
+
+  // Map gallery
+  const main = document.getElementById("mainmap");
+  const gal = document.getElementById("gallery");
+  const maps = meta.maps || [];
+  const show = (m, fig) => {
+    main.src = `${base}/${m}`;
+    gal.querySelectorAll("img").forEach(i => i.classList.remove("sel"));
+    if (fig) fig.querySelector("img").classList.add("sel");
+  };
+  maps.forEach((m, i) => {
+    const fig = document.createElement("figure");
+    fig.style.margin = "0";
+    fig.innerHTML = `<img src="${base}/${m}" alt=""><figcaption>${m.slice(5, 15)}</figcaption>`;
+    fig.querySelector("img").addEventListener("click", () => show(m, fig));
+    gal.appendChild(fig);
+    if (i === maps.length - 1) show(m, fig);
+  });
+
+  drawChart(meta, series);
+  fillTable(series);
+}).catch(() => {
+  document.getElementById("title").textContent = "AOI not found";
+  document.getElementById("desc").textContent =
+    "Could not load data — serve the repo root (python -m http.server) and open /site/aoi.html?id=…";
+});
+
+function fillTable(series) {
+  const tb = document.getElementById("tbody");
+  [...series].reverse().forEach(o => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td>${o.date}</td><td class="num">${o.mean_index ?? "–"}</td>` +
+      `<td class="num">${o.frac_above != null ? (o.frac_above * 100).toFixed(1) + "%" : "–"}</td>` +
+      `<td class="num">${(o.valid_frac * 100).toFixed(0)}%</td>` +
+      `<td class="num">${o.cloud_cover_scene}</td>` +
+      `<td>${(o.flags || []).map(f => FLAG_LABEL[f] || f).join(", ")}</td>`;
+    tb.appendChild(tr);
+  });
+}
+
+function drawChart(meta, series) {
+  const css = k => getComputedStyle(document.documentElement).getPropertyValue(k).trim();
+  const svg = document.getElementById("chart");
+  document.getElementById("charttitle").textContent = `${meta.index_label} time series`;
+  document.getElementById("legend").innerHTML =
+    `<span><span class="sw" style="background:${css("--series-1")}"></span>Mean ${meta.index_label}</span>` +
+    `<span><span class="sw" style="background:${css("--series-2")}"></span>Area over threshold</span>`;
+
+  const W = 900, H = 380, L = 52, R = 16, T = 14, B = 40;
+  const pts = series.filter(o => o.mean_index != null);
+  if (!pts.length) return;
+  const dates = pts.map(o => new Date(o.date).getTime());
+  const x0 = Math.min(...dates), x1 = Math.max(...dates) || x0 + 1;
+  const vals = pts.flatMap(o => [o.mean_index, o.frac_above]).filter(v => v != null);
+  const yMin = Math.min(-0.05, ...vals, meta.index_threshold) - 0.05;
+  const yMax = Math.max(1, ...vals) + 0.05;
+  const x = t => L + (x1 === x0 ? 0.5 : (t - x0) / (x1 - x0)) * (W - L - R);
+  const y = v => T + (1 - (v - yMin) / (yMax - yMin)) * (H - T - B);
+
+  let g = "";
+  for (let v = Math.ceil(yMin * 4) / 4; v <= yMax; v += 0.25) {
+    g += `<line x1="${L}" y1="${y(v)}" x2="${W - R}" y2="${y(v)}" stroke="${css("--grid")}" stroke-width="1"/>` +
+      `<text x="${L - 8}" y="${y(v) + 4}" text-anchor="end" font-size="11" fill="${css("--muted")}">${v.toFixed(2)}</text>`;
+  }
+  const fmt = t => new Date(t).toISOString().slice(5, 10);
+  const nTicks = Math.min(6, pts.length);
+  for (let i = 0; i < nTicks; i++) {
+    const t = x0 + (x1 - x0) * (nTicks === 1 ? 0.5 : i / (nTicks - 1));
+    g += `<text x="${x(t)}" y="${H - B + 18}" text-anchor="middle" font-size="11" fill="${css("--muted")}">${fmt(t)}</text>`;
+  }
+  g += `<line x1="${L}" y1="${y(meta.index_threshold)}" x2="${W - R}" y2="${y(meta.index_threshold)}" stroke="${css("--baseline")}" stroke-width="1" stroke-dasharray="4 4"/>` +
+    `<text x="${W - R}" y="${y(meta.index_threshold) - 5}" text-anchor="end" font-size="10" fill="${css("--muted")}">threshold ${meta.index_threshold}</text>`;
+  g += `<line x1="${L}" y1="${H - B}" x2="${W - R}" y2="${H - B}" stroke="${css("--baseline")}" stroke-width="1"/>`;
+
+  const path = (get, color) => {
+    const d = pts.map((o, i) => `${i ? "L" : "M"}${x(new Date(o.date).getTime()).toFixed(1)},${y(get(o)).toFixed(1)}`).join("");
+    return `<path d="${d}" fill="none" stroke="${color}" stroke-width="2" stroke-linejoin="round"/>`;
+  };
+  g += path(o => o.mean_index, css("--series-1"));
+  g += path(o => o.frac_above ?? 0, css("--series-2"));
+  pts.forEach(o => {
+    const cx = x(new Date(o.date).getTime());
+    if ((o.flags || []).length) {
+      g += `<circle cx="${cx}" cy="${y(o.frac_above ?? o.mean_index)}" r="6" fill="${css("--critical")}" stroke="${css("--surface-1")}" stroke-width="2"/>`;
+    }
+    g += `<rect class="hit" data-date="${o.date}" x="${cx - 8}" y="${T}" width="16" height="${H - T - B}" fill="transparent"/>`;
+  });
+  g += `<line id="crosshair" y1="${T}" y2="${H - B}" stroke="${css("--baseline")}" stroke-width="1" visibility="hidden"/>`;
+  svg.innerHTML = g;
+
+  const tip = document.getElementById("tooltip");
+  const cross = svg.querySelector("#crosshair");
+  const byDate = Object.fromEntries(pts.map(o => [o.date, o]));
+  svg.querySelectorAll("rect.hit").forEach(el => {
+    el.addEventListener("pointerenter", () => {
+      const o = byDate[el.dataset.date];
+      const cx = +el.getAttribute("x") + 8;
+      cross.setAttribute("x1", cx); cross.setAttribute("x2", cx);
+      cross.setAttribute("visibility", "visible");
+      tip.innerHTML = `<b>${o.date}</b><br>mean ${meta.index_label}: ${o.mean_index}` +
+        `<br>area over ${meta.index_threshold}: ${(o.frac_above * 100).toFixed(1)}%` +
+        ((o.flags || []).length ? `<br><span style="color:${css("--critical")}">${o.flags.map(f => FLAG_LABEL[f] || f).join(", ")}</span>` : "");
+      tip.style.display = "block";
+      const box = document.getElementById("chartbox").getBoundingClientRect();
+      const px = cx / W * box.width;
+      tip.style.left = Math.min(px + 12, box.width - 190) + "px";
+      tip.style.top = "20px";
+    });
+    el.addEventListener("pointerleave", () => {
+      tip.style.display = "none";
+      cross.setAttribute("visibility", "hidden");
+    });
+  });
+}
+</script>
+</body>
+</html>
